@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "favorites.resources": [
+      {
+        "filePath": "core/alt/bash_tools.sh",
+        "group": "Default"
+      }
+    ]
+  }
+}
