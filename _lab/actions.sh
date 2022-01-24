@@ -24,9 +24,15 @@ initializeRC()
 
         mkdir -p "${rcDir}"
 
-        git clone ""
+        git clone "https://github.com/johnny13/dotfiles"
 
         pause
+    else
+
+        run_banner "● ❯❯❯❯❯ ◆ UPDATING RC ◆ ❮❮❮❮❮ ●" "━" 26
+        cd "${rcDir}"
+        git pull
+
     fi
 }
 

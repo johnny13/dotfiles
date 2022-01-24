@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "."
+    },
+    {
+      "path": "../dr_bash"
     }
   ],
   "settings": {

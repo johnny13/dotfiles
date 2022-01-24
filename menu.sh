@@ -129,6 +129,7 @@ echoChoiceSelect()
             ;;
         d)
             echoMiniHeader
+            initializeRC
             dotfileCOPY
             dotfileLINK
             dotfileMEDIA
