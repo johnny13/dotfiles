@@ -12,6 +12,8 @@ removeSymlinks()
 ### Profile Functions
 ### -----------------------------------------------
 
+# This function is not called. Chicken and Egg thing. If you have this repo already installed, you dont need to install it.
+# and inorder to use this function, the repo already needs to be installed...
 initializeRC()
 {
     local rcDir
@@ -293,6 +295,30 @@ clearOutTempShellScripts()
     if [ -d "$binTempDir" ]; then
         rm -r "${binTempDir}"
     fi
+}
+
+## ACTION: Box Setup Scripts
+## ----------------------------------------------------
+boxInstallScripts()
+{
+    debFile="${BASEDIR}/box/Debian/RUN.sh"
+    macFile="${BASEDIR}/box/Darwin/RUN.sh"
+
+    OUTPUT_MSG "INFO" "building DEBIAN setup script..."
+    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Debian/_install.sh" "${BASEDIR}/box/_end.sh" >$debFile
+
+    OUTPUT_MSG "INFO" "building DARWIN setup script..."
+    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_install.sh" "${BASEDIR}/box/_end.sh" >$macFile
+
+}
+
+gitCommit()
+{
+    echo ''
+    echo 'git add *'
+    echo 'git commit -m "feat: <example feature>"'
+    echo 'git push'
+    echo ''
 }
 
 ## ACTION: Initial install icons & ascii art into $HOME

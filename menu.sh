@@ -129,7 +129,7 @@ echoChoiceSelect()
             ;;
         d)
             echoMiniHeader
-            initializeRC
+            #initializeRC
             dotfileCOPY
             dotfileLINK
             dotfileMEDIA
@@ -162,22 +162,31 @@ echoChoiceSelect()
         p)
             echo "pixel art"
             ;;
-        8)
+        k)
             echo "delta diff"
             echo "fuzzy-sys"
             echo "kanban board"
             ;;
         r)
-            echo "install files to home"
-            ;;
-        a)
             echoMiniHeader
-            dotfileMEDIA
+            boxInstallScripts
+            pause
+            echoMainMenuDisplay
+            ;;
+        8)
+            echoMiniHeader
+            echo "TODO:Backup Installed APT packages."
             pause
             echoMainMenuDisplay
             ;;
         h)
             usage
+            ;;
+        g)
+            echoMiniHeader
+            gitCommit
+            pause
+            echoMainMenuDisplay
             ;;
         q)
             clear
@@ -268,7 +277,7 @@ echoMainMenuDisplay()
 ## -------------------------
 declare -a coreItem=("[b] build .bashrc" "[d] dotfile sync" "[s] shell scripts" "[1] status report")
 declare -a cliItem=("[x] Keyboard Help" "[k] CLI Apps" "[p] Pixel Art" "[n] new .sh script")
-declare -a initItem=("[a] load ascii & icons" "[r] dotfile repo setup")
+declare -a initItem=("[8] box backup" "[r] rebuild box scripts" "[g] git commit help")
 
 ##
 ## Start Script / Main Menu
