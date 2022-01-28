@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-if [ "$EUID" -ne 0 ]; then
-         echo "Please run as root"
-    exit 1
-fi
+# if [ "$EUID" -ne 0 ]; then
+#          echo "Please run as root"
+#     exit 1
+# fi
 
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
@@ -93,29 +93,28 @@ banner
 
 taskList()
 {
-    taskName "TASK NAME"
-    taskStatus "INFO" "PHP INSTALL"
-    sudo apt update -y --show-progress
-    sudo apt upgrade -y --show-progress
+    taskName "BOOTSTRAP START"
+    taskStatus "SETUP" "SYSTEM UPDATE & UPGRADE"
+    sudo apt update
+    sudo apt upgrade
     lineBreak
 
     taskName "SETUP"
     taskStatus "HOME" "CREATE DIRECTORY"
-
     cd ~
     mkdir -p ./Developer
     cd ./Developer
 
     lineBreak
 
-    taskName "SOURCES"
-    taskStatus "ADD" "GITHUB & CHECKRA1N"
-    addSources
+    taskName "INSTALL"
+    taskStatus "APT" "PACKAGE INSTALLS"
+    libraries
     lineBreak
 
-    taskName "INSTALL"
-    taskStatus "GIT" "APT INSTALL"
-    sudo apt install git wget curl build-essential software-properties-common xutils-dev dialog nano micro sassc
+    taskName "SOURCES"
+    taskStatus "ADD" "GITHUB CLI TOOL"
+    addSources
     lineBreak
 
     taskName "PHP-7 DEBIAN"
@@ -158,7 +157,7 @@ addNode()
     taskStatus "YARN" "INSTALLING PACKAGE MANAGER"
     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-    sudo apt update && sudo apt install -y  yarn
+    sudo apt update && sudo apt install -y yarn
 
 }
 
@@ -204,12 +203,12 @@ addSources()
     sudo add-apt-repository universe
 
     sudo apt update
-    sudo apt install gh
+    sudo apt install -y gh
 }
 
 libraries()
 {
-    sudo  apt install gcc build-essential checkinstall zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev wget openssl libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+    sudo apt install -y gcc git wget curl software-properties-common xutils-dev dialog nano micro sassc build-essential checkinstall zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev openssl libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
     sudo apt install -y git curl unzip lsb-release apt-transport-https ca-certificates openssl openssh-server openssh-client openjdk-14-jdk openjdk-14-jre parted pastebinit qemu-kvm rsync shc ssh-import-id ssh-askpass-gnome ssl-cert sudo synaptic spacefm unrar vagrant xdotool xclip zip yadm android-file-transfer android-sdk-platform-tools-common ansiweather caca-utils cmake automake debconf dconf-cli dkms fo nt-manager font-viewer fontconfig ftp fuse gawk gettext ghostscript gparted gpart gpg htop iftop imagemagick jo
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-if [ "$EUID" -ne 0 ]; then
-         echo "Please run as root"
-    exit 1
-fi
+# if [ "$EUID" -ne 0 ]; then
+#          echo "Please run as root"
+#     exit 1
+# fi
 
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
