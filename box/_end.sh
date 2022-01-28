@@ -5,11 +5,15 @@
 rcDir="${HOME}/.dotfiles"
 taskName "Dotfiles"
 taskStatus "SETUP" "CLONING DOTFILES REPO"
-mkdir -p "${rcDir}"
-git clone "https://github.com/johnny13/dotfiles"
+#mkdir -p "${rcDir}"
+if [ -d "${rcDir}" ]; then
+    rm -r $rcDir
+fi
 
-echo  'export PATH="${HOME}/.local/bin:$PATH"' >>~/.bashrc
-source  ~/.bashrc
+git clone "https://github.com/johnny13/dotfiles" $rcDir
+
+#echo  'export PATH="${HOME}/.local/bin:$PATH"' >>~/.bashrc
+#source  ~/.bashrc
 
 lineBreak
 
@@ -19,8 +23,11 @@ lineBreak
 
 taskName "Rust"
 taskStatus "INSTALL" "RUST + CARGO CRATES"
+
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
+
+rustup component add clippy
 
 cargo install eureka
 cargo install exa

@@ -305,10 +305,12 @@ boxInstallScripts()
     macFile="${BASEDIR}/box/Darwin/RUN.sh"
 
     OUTPUT_MSG "INFO" "building DEBIAN setup script..."
-    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Debian/_install.sh" "${BASEDIR}/box/_end.sh" >$debFile
+    cat "${BASEDIR}/box/_header.sh" "${BASEDIR}/_lab/color_codes.sh" "${BASEDIR}/_lab/helpers_fs.sh" "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Debian/_install.sh" "${BASEDIR}/box/_end.sh" >$debFile
 
-    OUTPUT_MSG "INFO" "building DARWIN setup script..."
-    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_install.sh" "${BASEDIR}/box/_end.sh" >$macFile
+    # OUTPUT_MSG "INFO" "building DARWIN setup script..."
+    # cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_install.sh" "${BASEDIR}/box/_end.sh" >$macFile
+
+    
 
 }
 

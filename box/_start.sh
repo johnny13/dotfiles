@@ -1,26 +1,3 @@
-#!/usr/bin/env bash
-
-# if [ "$EUID" -ne 0 ]; then
-#          echo "Please run as root"
-#     exit 1
-# fi
-
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-
-##
-## COLOR OPTIONS
-##
-
-BRED="\e[1;31m" # Red
-BBLU="\e[1;34m" # Blue
-BGRN="\e[1;32m" # Green
-BCYN="\e[1;36m" # Cyan
-BWHT="\e[1;37m" # White
-BPUR="\e[1;35m" # Purple
-BYLW="\e[1;33m" # Yellow
-NORMAL="\e[0m"  # Text Reset
-
 ###
 ### UI FUNCTIONS
 ###
@@ -32,19 +9,19 @@ banner()
     cat <<EOF
 
 
-                0000000..    .,-00000
-                ||||^^|||| ,|||*^^^^*
-                [[[,/[[[*  [[[
-                XXXXXxx    XXX
-                888b ^88bo_*88bo.__.o
+                          0000000..   .,-00000
+                          ||||^^||||,|||*^^^^*
+                          [[[,/[[[* [[[
+                          XXXXXxx   XXX
+                          888b ^88bo*88bo.__.o
 EOF
 
     echo -en "${BCYN}"
 
     cat <<EOF
-  .--.      .--.      .--.      .--.      .--.
-:::::.\::::::::.\::::::::.\::::::::.\::::::::.\::[ 0.13.1 ]
-       '--'      '--'      '--'      '--'      '
+  .--.      .--.      .--. .+----------------+.   .--.      .--.      .--.
+:::::.\::::::::.\::::::::.| RESEARCH CHEMICALS |:::::.\::::::::.\::::::::.\::
+       '--'      '--'      '+----------------+'        '--'      '--'      '
 
 EOF
     echo -e "${NORMAL}"
@@ -54,12 +31,15 @@ EOF
 taskName()
 {
     STATS=$( date +'%I:%M.%S')
-    echo -e "\t${BPUR}◼◼◼ ◼◼ ◼${BCYN} $1 ${BWHT} ❱❱ ${BGRN}${STATS} ${NORMAL}"
+    printf "
+${BPurple}◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼
+${NC}\t 🎃 ${BGRN}${STATS} ${BCYN}❱❱  ${BWhite} $1
+${BPurple}◼ ◼ ◼ ◼ ◼  ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼ ◼${NC}"
 }
 
 taskStatus()
 {
-    echo -e "\t${BCYN}━━━${BBLU}❪ ${BWHT}$1 ${BBLU}❫${BCYN}━━━━━${BPUR}[ ${BWHT}$2 ${BPUR}]${NORMAL}"
+    echo -e "\n\t${BCYN}•••━ • ━•${BBLU}❪ ${BWHT}$1 ${BBLU}❫${BCYN}━━ • ━━${BPUR}[ ${BWHT}$2 ${BPUR}] ❱${NORMAL}\n"
 }
 
 lineBreak()
@@ -70,6 +50,14 @@ lineBreak()
 finishEcho()
 {
     echo -e "\n\t${BGRN}━━━━━━▶ $1 FINISHED!\n${NORMAL}\n\n"
+}
+
+logFileLineBreak()
+{
+    STATS=$( date +'%I:%M.%S')
+    echo -e "\n\n" >> ${LOGFILE}
+    echo -e "•• ━━━━━━━━ • ━━━ • [ ${STATS} ] ━━━ • ━━ •" >> ${LOGFILE}
+    echo -e "\n" >> ${LOGFILE}
 }
 
 # Checks if a command is installed
@@ -89,3 +77,11 @@ _hasCMD()
 ###
 
 banner
+
+sleep 2
+
+# 	Display 5 seconds count down before script executes
+for i in $(seq 5 -1 1); do
+    echo -ne "$i\rGetting ready to proceed with the automation in... "
+    sleep 1
+done

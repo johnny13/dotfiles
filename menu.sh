@@ -27,6 +27,7 @@ cd "${BASEDIR}"
 
 . "./_lab/ansi"
 . "./_lab/helpers.sh"
+. "./_lab/helpers_fs.sh"
 . "./_lab/actions.sh"
 
 # [R]un [A]s [R]oot?
