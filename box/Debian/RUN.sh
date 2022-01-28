@@ -373,7 +373,7 @@ banner()
                           ||||^^||||,|||*^^^^*
                           [[[,/[[[* [[[
                           XXXXXxx   XXX
-                          888b ^88bo*88bo.__.o
+                          888b ^88bo*88bo.__.o 
 EOF
 
     echo -en "${BCYN}"
