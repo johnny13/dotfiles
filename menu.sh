@@ -29,6 +29,7 @@ cd "${BASEDIR}"
 . "./_lab/helpers.sh"
 . "./_lab/helpers_fs.sh"
 . "./_lab/actions.sh"
+. "./_lab/libui.sh"
 
 # [R]un [A]s [R]oot?
 RAR="false"
@@ -87,6 +88,8 @@ safeExit()
 echoMenuBG()
 {
     ansi::eraseDisplay 2
+    ansi::position "1;1"
+    ansi::down 2
     #ansi::bgBlack
     ansi::color 77
     cat "./_lab/bg.txt"
@@ -118,7 +121,7 @@ echoChoiceSelect()
     local option
     ansi::bold
     ansi::color 11
-    echo -e "\n\n\tENTER LETTER TO LAUNCH COMMAND [?]\n\n"
+    echo -e "\tENTER CHOICE TO CONTINUE [?]"
     read -n 1 -s option </dev/tty
     case "$option" in
         b)
@@ -151,8 +154,11 @@ echoChoiceSelect()
             pause
             echoMainMenuDisplay
             ;;
-        1)
-            echo "status report"
+        a)
+            echoMiniHeader
+            addNewUser
+            pause
+            echoMainMenuDisplay
             ;;
         x)
             echoMiniHeader
@@ -161,12 +167,18 @@ echoChoiceSelect()
             echoMainMenuDisplay
             ;;
         p)
+            echoMiniHeader
             echo "pixel art"
+            pause
+            echoMainMenuDisplay
             ;;
         k)
+            echoMiniHeader
             echo "delta diff"
             echo "fuzzy-sys"
             echo "kanban board"
+            pause
+            echoMainMenuDisplay
             ;;
         r)
             echoMiniHeader
@@ -176,7 +188,7 @@ echoChoiceSelect()
             ;;
         8)
             echoMiniHeader
-            echo "TODO:Backup Installed APT packages."
+            echo "TODO: ADD Functions"
             pause
             echoMainMenuDisplay
             ;;
@@ -232,7 +244,8 @@ echoMainMenuDisplay()
 
     ## Main Menu Categories
     ## -------------------------
-    echoMenuRow "▰▱❪❮ CORE ITEMS ❯❫▰▱▱▰" 8
+    echo ""
+    echoMenuRow "▰▱❪❮ SH CONFIGS ❯❫▰▱▱▰" 8
     echo ""
 
     for i in "${coreItem[@]}"; do
@@ -250,9 +263,9 @@ echoMainMenuDisplay()
         echoMenuItem "${i}"
     done
 
-    ansi::down 2
+    ansi::down 1
 
-    echoMenuRow "▰▱❪❮ INSTALL RC ❯❫▰▱▱▰" 8
+    echoMenuRow "▰▱❪❮ RC CORE ❯❫▰▱▱▰" 8
     echo ""
 
     for i in "${initItem[@]}"; do
@@ -262,7 +275,7 @@ echoMainMenuDisplay()
 
     ## Finish Main Menu
     ## -------------------------
-    ansi::down 24
+    ansi::down 4
 
     echoChoiceSelect
 
@@ -270,15 +283,15 @@ echoMainMenuDisplay()
     ansi::normal
     ansi::resetBackground
 
-    echo -e "\n\n"
+    echo -e "\n"
 }
 
 ##
 ## Declare Menu Items
 ## -------------------------
-declare -a coreItem=("[b] build .bashrc" "[d] dotfile sync" "[s] shell scripts" "[1] status report")
-declare -a cliItem=("[x] Keyboard Help" "[k] CLI Apps" "[p] Pixel Art" "[n] new .sh script")
-declare -a initItem=("[8] box backup" "[r] rebuild box scripts" "[g] git commit help")
+declare -a coreItem=("[b] build .bashrc" "[s] build sh tools" "[n] new .sh script" "[r] build box builder")
+declare -a cliItem=("[x] Keyboard Help" "[k] CLI Apps" "[p] Pixel Art" "[8] todo idk")
+declare -a initItem=("[d] dotfile setup" "[a] add local dots" "[g] git commit")
 
 ##
 ## Start Script / Main Menu

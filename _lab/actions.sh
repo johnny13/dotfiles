@@ -63,10 +63,12 @@ buildBashRC()
     for fbash in "${search_dir}"/core/rc/*.sh; do
         if [ -f "$fbash" ]; then
             NN=$(basename "${fbash}")
-            if [ "${NN}" != "05_imports.sh" ]; then
-                cat "${fbash}" >>"${final_file}"
-                printf "\n" >>"${final_file}"
-            fi
+            # if [ "${NN}" != "05_imports.sh" ]; then
+            #     cat "${fbash}" >>"${final_file}"
+            #     printf "\n" >>"${final_file}"
+            # fi
+            cat "${fbash}" >>"${final_file}"
+            printf "\n" >>"${final_file}"
         fi
     done
 
@@ -115,6 +117,10 @@ activateNewDotfile()
 ## --------------------------------------------------------
 addRCImports()
 {
+    ##
+    ## WARNING: THIS IS NOT USED AT THE MOMENT. UNCLEAR WHAT IS WAS USED FOR
+    ##
+
     local rand_string
     local import_file
     local TFILE
@@ -310,8 +316,6 @@ boxInstallScripts()
     # OUTPUT_MSG "INFO" "building DARWIN setup script..."
     # cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_install.sh" "${BASEDIR}/box/_end.sh" >$macFile
 
-    
-
 }
 
 gitCommit()
@@ -442,7 +446,7 @@ addLocalProfileSH()
 
 installYADM()
 {
-    echo "Installing yadm via git..."
+    OUTPUT_MSG "INFO" "Installing yadm via git..."
     mkdir -p ~/.code ~/.code/bin
     git clone https://github.com/TheLocehiliosan/yadm.git ~/.code/yadm
     ln -sf ~/.code/yadm/yadm ~/.code/bin/
@@ -452,19 +456,173 @@ installYADM()
 createNewShellScript()
 {
     # Prompt for Name
+    ansi::bold
+    ansi::color 11
+    echo -e "\n     Creating New Shell Script\n\n"
+    message="     what to use for filename? :  "
+    read -rp "$message" NEWFILENAME
 
-    # Prompt for Type
+    fname="${NEWFILENAME}.sh"
 
-    #   Type 1: Single Function
-    #   Type 2: Parameter Script
-    #   --> If 1 or 2
-    #           Launch ASCII Header Builder
-    #           Copy Template Files to new dir
+    echo ""
 
-    #   Type 3: Laravel Zero    (Menu Heavy)
-    #   Type 4: NodeJS Template (TUI)
-    #   --> If 3 or 4
-    #           Copy Template Files
+    message="     where to create file? [ex: /my/saved/path] :  "
+    read -rp "$message" NEWFILEPATH
 
-    echo "TODO!"
+    fpath="${NEWFILEPATH}"
+
+    # strip trailing slash & check if valid
+    TRIMMED=$(echo $fpath | sed 's:/*$::')
+    if [[ ! -d "$TRIMMED" ]]; then
+        OUTPUT_MSG "FAIL" "ERROR! Path: ${TRIMMED} not found."
+    fi
+
+    # confirm file doesnt already exist
+    NFILE="${TRIMMED}/${fname}"
+    if is_file "${NFILE}"; then
+        OUTPUT_MSG "FAIL" "File already exists! Exiting... :("
+    fi
+
+    message="     Brief description of ${NEWFILENAME}:  "
+    read -rp "$message" NEWdetails
+    details="${NEWdetails}"
+
+    email="derek@huement.com"
+
+    echo ""
+
+    echo -e "\n\n     What type of template to use for ${NEWFILENAME}?\n"
+    ansi::color 45
+    echo "     ━ •• ━━━━━ •• ━━ •• ━━━ ••• ━"
+    echo "     "
+    echo -e "       ${BGRN}1 ${BCYN}| ${BYLW}Simple Single Function ${BPUR}[.sh] ${NORMAL}"
+    echo -e "       ${BGRN}2 ${BCYN}| ${BYLW}Multiple Input Parameters ${BPUR}[.sh] ${NORMAL}"
+    echo -e "       ${BGRN}3 ${BCYN}| ${BYLW}Laravel Zero ${BPUR}[.php] ${NORMAL}"
+    echo -e "       ${BGRN}4 ${BCYN}| ${BYLW}NodeJS Tempalte ${BPUR}[.js] ${NORMAL}"
+    echo "     "
+    ansi::color 45
+    echo "     ━ •• ━━━━━ •• ━━ •• ━━━ ••• ━"
+    echo "     "
+
+    ansi::color 11
+    read -n 1 -s option </dev/tty
+    case "$option" in
+        1)
+            echo -e "     ${BGRN}  Simple Function Selected!\n"
+            buildNewScript 1
+            ;;
+        2)
+            echo -e "     ${BGRN}  Multiple Input Selected!\n"
+            buildNewScript 2
+            ;;
+        3)
+            echo -e "     ${BGRN}  Laravel Zero Selected!\n"
+            buildNewLaravel
+            ;;
+        4)
+            echo -e "     ${BGRN}  NodeJS Selected!\n"
+            buildNewNode
+            ;;
+        *)
+            echo -e "     ${BRED}     Bad choice!!!${NORMAL}\n\n" && exit
+            ;;
+    esac
+    echo ""
+
+    ansi::resetForeground
+}
+
+buildNewScript()
+{
+    CHOICE="$1"
+
+    if [[ $CHOICE -eq 1 ]]; then
+        #echo " Build Simple"
+        BASEFILE="${BASEDIR}/new/SHELL/template_quick/run.sh"
+        cp "${BASEFILE}" "${NFILE}"
+    fi
+
+    if [[ $CHOICE -eq 2 ]]; then
+        #echo " Build Complex"
+        mkdir -p "${NEWFILEPATH}/${NEWFILENAME}"
+        BASEFILE="${BASEDIR}/new/SHELL/template/run.sh"
+        cp "${BASEFILE}" "${NEWFILEPATH}/${NEWFILENAME}/${NEWFILENAME}.sh"
+        NFILE="${NEWFILEPATH}/${NEWFILENAME}/${NEWFILENAME}.sh"
+    fi
+
+    OUTPUT_MSG "INFO" "Setting up new script...."
+
+    search="xSCRIPTNAMEx"
+    replace="${fname}"
+    sed -i "s|$search|$replace|g" "${NFILE}"
+
+    search='xSCRIPTDETAILSx'
+    
+    replace="${details}"
+    sed -i "s|$search|$replace|g" "${NFILE}"
+
+    search='xAUTHOREMAILx'
+    replace="${email}"
+    sed -i "s|$search|$replace|g" "${NFILE}"
+
+    search='xSCRIPTVERSIONx'
+    replace='0.0.1'
+    sed -i "s|$search|$replace|g" "${NFILE}"
+
+    search='xTODAYSDATEx'
+    replace=$(date +'%Y-%m-%d_%H')
+    sed -i "s|$search|$replace|g" "${NFILE}"
+
+    chmod +x "${NFILE}"
+
+    if [[ $CHOICE -eq 2 ]]; then
+        OUTPUT_MSG "INFO" "Adding additional libraries..."
+        BASED="${BASEDIR}/new/SHELL/template/docs"
+        BASEE="${BASEDIR}/new/SHELL/template/exmaples"
+        BASEL="${BASEDIR}/new/SHELL/template/library"
+
+        cp -r "${BASED}" "${NEWFILEPATH}/${NEWFILENAME}"
+        cp -r "${BASEE}" "${NEWFILEPATH}/${NEWFILENAME}"
+        cp -r "${BASEL}" "${NEWFILEPATH}/${NEWFILENAME}"
+    fi
+
+    OUTPUT_MSG "GOOD" "  Final Output Available Here: ${NFILE}"
+
+    echo ""
+}
+
+buildNewLaravel()
+{
+    echo -e "\n\nTODO ADD PHP PROJECT\n"
+}
+
+buildNewNode()
+{
+    echo -e "\n\nTODO ADD NODE.js PROJECT\n"
+}
+
+addNewUser()
+{
+    ansi::bold
+    ansi::color 11
+    echo -e "\n     Adding New Dotfile Setup\n\n"
+    message="     new machine username? :  "
+    read -rp "$message" USERNAME
+    #ansi::color 45
+    ansi::resetForeground
+
+    OUTPUT_MSG "INFO" "Creating local user ${USERNAME}..."
+
+    mkdir -p "${BASEDIR}/local/${USERNAME}"
+    mkdir -p "${BASEDIR}/local/${USERNAME}/copy"
+    mkdir -p "${BASEDIR}/local/${USERNAME}/link"
+    mkdir -p "${BASEDIR}/local/${USERNAME}/rc"
+    mkdir -p "${BASEDIR}/local/${USERNAME}/sh"
+
+    touch "${BASEDIR}/local/${USERNAME}/copy/.gitkeep"
+    touch "${BASEDIR}/local/${USERNAME}/link/.gitkeep"
+    touch "${BASEDIR}/local/${USERNAME}/rc/.gitkeep"
+    touch "${BASEDIR}/local/${USERNAME}/sh/.gitkeep"
+
+    OUTPUT_MSG "INFO" "Finished creating directories"
 }

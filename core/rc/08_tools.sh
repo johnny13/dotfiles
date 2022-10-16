@@ -16,9 +16,13 @@ alias kbt="kb list --tags"
 #export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules' --color=always"
 export FZF_DEFAULT_COMMAND='find -L . -type f -o -type d -o -type l | sed 1d | cut -b3- | grep -v -e .git/ -e .svn/ -e .hg/'
 
-export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
+#export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
+#export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+export FZF_CTRL_T_OPTS="--preview '([[ -f {} ]] && (bat --style=numbers --color=always --line-range :500 {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'"
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 
 export FZF_COMPLETION_OPTS='--info=inline --extended'
@@ -29,13 +33,12 @@ export FZF_DEFAULT_OPTS='
 --margin=2,2,2,2
 --padding=1,1,1,1
 --multi
---preview-window=:hidden
---preview "([[ -f {} ]] && (bat --style=numbers --color=always --line-range :500 {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200"
+--preview-window right,1,border-horizontal
 --prompt="∘⬣ "
 --pointer="▶"
 --marker="■"
 --ansi
---bind ?:toggle-preview
+--bind ctrl-p:toggle-preview
 --bind ctrl-a:select-all
 --bind ctrl-y:execute-silent(echo {+} | pbcopy)
 --bind ctrl-e:execute(echo {+} | xargs -o micro)
@@ -43,8 +46,7 @@ export FZF_DEFAULT_OPTS='
 '
 
 _gen_fzf_theme()
-                {
-
+{
    color00='#2d2d2d'
    color01='#393939'
    color02='#515151'
@@ -68,14 +70,27 @@ _gen_fzf_theme()
 _gen_fzf_theme
 
 _fzf_compgen_path()
-                    {
+{
   fd --hidden --follow --exclude ".git" . "$1"
 }
 
 _fzf_compgen_dir()
-                   {
+{
   fd --type d --hidden --follow --exclude ".git" . "$1"
   #exa -T --color always --icons -F -D
+}
+
+_fzf_comprun()
+{
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf "$@" --preview 'tree -C {} | head -200' ;;
+    export | unset) fzf "$@" --preview "eval 'echo \$'{}" ;;
+    ssh)          fzf "$@" --preview 'dig {}' ;;
+    *)            fzf "$@" ;;
+  esac
 }
 
 # _fzf_comprun() {
@@ -95,7 +110,7 @@ _fzf_compgen_dir()
 ###
 
 fdir()
-       {
+{
   #fzf + rg configuration
   if _has fzf && _has rg; then
       export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
@@ -108,13 +123,13 @@ fdir()
 alias fzf-dir='fdir'
 
 fcd()
-      {
+{
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 alias fzf-cd='fcd'
 
 fzfinfile()
-            {
+{
   if [ ! "$#" -gt 0 ]; then
     echo "Need a string to search for!"
     return 1
@@ -125,7 +140,7 @@ fzfinfile()
 alias fzf-fif='fzfinfile'
 
 fzf_kill()
-           {
+{
     local pid_col
 
     if [[ $(uname) = Linux ]]; then
@@ -147,7 +162,7 @@ fzf_kill()
 alias fzf-kill='fzf_kill'
 
 fzf_git_log()
-              {
+{
     local selections=$(
       git ll --color=always "$@" |
         fzf --ansi --no-sort --no-height \
@@ -201,21 +216,21 @@ bind '"\C-h": " \C-e\C-u\C-y\ey\C-u`__fzf_binary__`\e\C-e\er\e^"'
 bind '"\er": redraw-current-line'
 bind '"\e^": history-expand-line'
 
-unalias z
-z()
-    {
-  if [[ -z "$*" ]]; then
-    cd "$(_z -l 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
-  else
-    _last_z_args="$@"
-    _z "$@"
-  fi
-}
+# unalias z
+# z()
+# {
+#   if [[ -z "$*" ]]; then
+#     cd "$(_z -l 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
+#   else
+#     _last_z_args="$@"
+#     _z "$@"
+#   fi
+# }
 
-zz()
-     {
-  cd "$(_z -l 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")"
-}
+# zz()
+# {
+#   cd "$(_z -l 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")"
+# }
 
 ###
 ## Source FZF Script
@@ -277,7 +292,7 @@ alias unzipmulti='unzip_multiple'
 
 # Easily extract all compressed file types
 extract()
-           {
+{
    if [ -f "$1" ]; then
        case $1 in
            *.tar.bz2)   tar xvjf -- "$1"    ;;
@@ -310,3 +325,66 @@ md_to_png()
     md2png --bin /usr/local/bin/wkhtmltoimage --cssname jasonm23-dark -m "$1"
 }
 alias mdpng='md_to_png'
+
+f()
+    {
+    # Store the program
+    program="$1"
+
+    # Remove first argument off the list
+    shift
+
+    # Store option flags with separating spaces, or just set as single space
+    options="$@"
+    if [ -z "${options}" ]; then
+        options=" "
+  else
+        options=" $options "
+  fi
+
+    # Store the arguments from fzf
+    arguments="$(fzf --multi)"
+
+    # If no arguments passed (e.g. if Esc pressed), return to terminal
+    if [ -z "${arguments}" ]; then
+        return 1
+  fi
+
+    # We want the command to show up in our bash history, so write the shell's
+    # active history to ~/.bash_history. Then we'll also add the command from
+    # fzf, then we'll load it all back into the shell's active history
+    history -w
+
+    # ADD A REPEATABLE COMMAND TO THE BASH HISTORY ############################
+    # Store the arguments in a temporary file for sanitising before being
+    # entered into bash history
+    : >/tmp/fzf_tmp
+    for file in "${arguments[@]}"; do
+        echo "$file" >>/tmp/fzf_tmp
+  done
+
+    # Put all input arguments on one line and sanitise the command by putting
+    # single quotes around each argument, also first put an extra single quote
+    # next to any pre-existing single quotes in the raw argument
+    sed -i "s/'/''/g; s/.*/'&'/g; s/\n//g" /tmp/fzf_tmp
+
+    # If the program is on the GUI list, add a '&' to the command history
+    if [[ "$program" =~ ^(nautilus|zathura|evince|vlc|eog|kolourpaint)$ ]]; then
+        sed -i '${s/$/ \&/}' /tmp/fzf_tmp
+  fi
+
+    # Grab the sanitised arguments
+    arguments="$(cat /tmp/fzf_tmp)"
+
+    # Add the command with the sanitised arguments to our .bash_history
+    echo $program$options$arguments >>~/.bash_history
+
+    # Reload the ~/.bash_history into the shell's active history
+    history -r
+
+    # EXECUTE THE LAST COMMAND IN ~/.bash_history #############################
+    fc -s -1
+
+    # Clean up temporary variables
+    rm /tmp/fzf_tmp
+}

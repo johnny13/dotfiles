@@ -1,38 +1,17 @@
-_TEMP
-_TEMP/*
-
-test.sh
-
-t.sh
-
-test.txt
-
-test_menu.sh
-
 logo.html
 
-draw.sh
-
-albert.sh
-
-bash_alias_old.sh
-
-basic.conf
-
-bashrc.backup.sh
-
-neofetch.conf
-
-.history/*
 .history
 
-new
-new/*
+new/PHP
+new/NODE
 
 _lab/dose.sh
 
-media/ascii/*
-media/toys/*
-
 vault
-vault/*
+
+__ASSETS
+
+local
+local/lucky
+
+TODO

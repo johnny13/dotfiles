@@ -1,27 +1,41 @@
 #!/bin/bash
-#/ Sort downloaded images into one optimized folder.
 #/
-#/ Usage: ./img_sort.sh
+#/ Allows you to move images into folders based on file size and/or extension.
+#/ Additionally cleans up file extension capitalization errors, and removes
+#/ duplicate files. Will also zip the result for easy transfer.
 #/
-#/ opts:
-#/    -s|--sort <DIR>)
-#/       Sort the images in given Directory
-#/    -p|--pack)
-#/       Package the end result into a .zip archive
+#/ Usage: ./image-sorter.sh -t <DIR>
+#/
+#/ OPTIONS:
 #/    -d|--dedupe)
 #/       Remove any duplicates (requires 'fdupes' package)
+#/    -e|--extensions)
+#/       Raster / Vector categorize end result
+#/    -i|--icons)
+#/       Filter out icons from end result
+#/    -m|--merge <DIR>)
+#/       Rsync Merge into given directory
+#/    -p|--pack)
+#/       Package the end result into a .zip archive saved to target directory
+#/    -s|--sort <DIR>)
+#/       Sort the images in given Directory
+#/
+#/ REQUIRED:
+#/    -t|--target <DIR>)
+#/       Where to put the sorted images. If not given ~/Pictures is used
+#/
+#/ HELP:
 #/    -h|-?|--help)
 #/       show this help and exit
 #/
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")"  >/dev/null 2>&1 && pwd)"
-PROJECT="Sort a bunch of random folders recursively into one directory w/ only the image files."
-
-cd "${DIR}"
 
 ## CUSTOMIZE THIS PART
-XV="~/Pictures/WebDownloads"
+#TARGET_DIR="~/Pictures/WebDownloads"
+TARGET_DIR="~/Pictures"
 ZIP="~/Pictures"
+
 ## END CUSTOMIZE
 
 # COLOR OPTIONS
@@ -43,9 +57,17 @@ function banner
     #
     # Then run this to create the final header
     # cat ban.txt divider.txt > header.txt
+
     echo -e "\n"
-    cat "${DIR}/sort.txt"
-    _hashes "+" "${COLS}"
+    cat <<EOF
+[0;1;33;93m██[0;1;32;92m╗[0m      [0;1;35;95m█[0;1;31;91m██[0;1;33;93m██[0;1;32;92m██[0;1;36;96m╗[0m [0;1;34;94m██[0;1;35;95m██[0;1;31;91m██[0;1;33;93m╗[0m [0;1;32;92m██[0;1;36;96m██[0;1;34;94m██[0;1;35;95m╗[0m [0;1;31;91m██[0;1;33;93m██[0;1;32;92m██[0;1;36;96m██[0;1;34;94m╗█[0;1;35;95m██[0;1;31;91m██[0;1;33;93m█╗[0m
+[0;1;32;92m██[0;1;36;96m║[0m      [0;1;31;91m█[0;1;33;93m█╔[0;1;32;92m══[0;1;36;96m══[0;1;34;94m╝█[0;1;35;95m█╔[0;1;31;91m══[0;1;33;93m═█[0;1;32;92m█╗[0;1;36;96m██[0;1;34;94m╔═[0;1;35;95m═█[0;1;31;91m█╗[0;1;33;93m╚═[0;1;32;92m═█[0;1;36;96m█╔[0;1;34;94m══[0;1;35;95m╝█[0;1;31;91m█╔[0;1;33;93m══[0;1;32;92m██[0;1;36;96m╗[0m
+[0;1;36;96m██[0;1;34;94m║█[0;1;35;95m██[0;1;31;91m██[0;1;33;93m╗█[0;1;32;92m██[0;1;36;96m██[0;1;34;94m██[0;1;35;95m╗█[0;1;31;91m█║[0m   [0;1;32;92m█[0;1;36;96m█║[0;1;34;94m██[0;1;35;95m██[0;1;31;91m██[0;1;33;93m╔╝[0m   [0;1;36;96m█[0;1;34;94m█║[0m   [0;1;31;91m█[0;1;33;93m██[0;1;32;92m██[0;1;36;96m█╔[0;1;34;94m╝[0m
+[0;1;34;94m██[0;1;35;95m║╚[0;1;31;91m══[0;1;33;93m══[0;1;32;92m╝╚[0;1;36;96m══[0;1;34;94m══[0;1;35;95m██[0;1;31;91m║█[0;1;33;93m█║[0m   [0;1;36;96m█[0;1;34;94m█║[0;1;35;95m██[0;1;31;91m╔═[0;1;33;93m═█[0;1;32;92m█╗[0m   [0;1;34;94m█[0;1;35;95m█║[0m   [0;1;33;93m█[0;1;32;92m█╔[0;1;36;96m══[0;1;34;94m██[0;1;35;95m╗[0m
+[0;1;35;95m██[0;1;31;91m║[0m      [0;1;36;96m█[0;1;34;94m██[0;1;35;95m██[0;1;31;91m██[0;1;33;93m║╚[0;1;32;92m██[0;1;36;96m██[0;1;34;94m██[0;1;35;95m╔╝[0;1;31;91m██[0;1;33;93m║[0m  [0;1;32;92m█[0;1;36;96m█║[0m   [0;1;35;95m█[0;1;31;91m█║[0m   [0;1;32;92m█[0;1;36;96m█║[0m  [0;1;35;95m██[0;1;31;91m║[0m
+[0;1;31;91m╚═[0;1;33;93m╝[0m      [0;1;34;94m╚[0;1;35;95m══[0;1;31;91m══[0;1;33;93m══[0;1;32;92m╝[0m [0;1;36;96m╚═[0;1;34;94m══[0;1;35;95m══[0;1;31;91m╝[0m [0;1;33;93m╚═[0;1;32;92m╝[0m  [0;1;36;96m╚[0;1;34;94m═╝[0m   [0;1;31;91m╚[0;1;33;93m═╝[0m   [0;1;36;96m╚[0;1;34;94m═╝[0m  [0;1;31;91m╚═[0;1;33;93m╝[0m
+EOF
+    echo -e "\n"
 }
 
 function die
@@ -73,6 +95,11 @@ function good
     echo
 }
 
+function status
+{
+    echo -e "${BPUR}[STAT]${NORMAL} $1"
+}
+
 function show_help
 {
     grep '^#/' "${BASH_SOURCE[0]}" | cut -c4- ||
@@ -81,8 +108,8 @@ function show_help
 
 function _hashes
 {
-    HC=60
-    CS="-"
+    HC=50
+    CS="x"
     echo -ne "${BWHT}${B_CYN}"
     printf %"$HC"s | tr " " "$CS"
     echo -ne "${NORMAL}\n\n"
@@ -91,8 +118,8 @@ function _hashes
 function run_banner
 {
     echo ""
-    echo -e "${BCYN}$1${NORMAL}"
-    _hashes "+" "${COLS}"
+    echo -e "       ${BYLW}>>>  ${BCYN}$1  ${BYLW}<<<  ${NORMAL}"
+    echo ""
 }
 
 ########
@@ -102,91 +129,211 @@ function run_banner
 function packItUp
 {
     info "Compressing Files in: $1"
-    zip -r "${ZIP}/images.zip" "$1"
+    tmpfile=$(mktemp /tmp/SortedImages.zip)
+    # zip -r "${ZIP}/images.zip" "$1"
+    zip -r "$tmpfile" "$1"
     good "Archive Created!"
-    ls -l "$1" | grep .zip
-    mfs=$(du --apparent-size --block-size=1  "${ZIP}/images.zip" | awk '{ print $1}')
-    info "Zip Archive Size: ${mfs}"
+    mv "$tmpfile" "${TARGET_DIR}"
+    #rm "$tmpfile"
+    #ls -l "$1" | grep .zip
+    mfs=$(du --apparent-size --block-size=1  "${TARGET_DIR}/SortedImages.zip" | awk '{ print $1}')
+    good "Zip Archive Size: ${mfs}"
 }
 
 function removeDupes
 {
-    info "Searching Files in: $1"
-    BEFORE=$(ls "$1" | wc -l)
-    fdupes -qdN -r "$1"
-    AFTER=$(ls "$1" | wc -l)
-    info "BEFORE: ${BEFORE} Files"
-    info " AFTER: ${AFTER} Files"
+    if ! command -v fdupes &>/dev/null; then
+        die "Install fdupes command to remove duplicate files"
+    else
+        info "Searching Files in: $1"
+        BEFORE=$(ls "$1" | wc -l)
+        fdupes -qdN -r "$1"
+        AFTER=$(ls "$1" | wc -l)
+        status "BEFORE: ${BEFORE} Files"
+        status " AFTER: ${AFTER} Files"
+    fi
+}
+
+function renameFile
+{
+    FILE=$1
+    randomString=$(openssl rand -base64 6)
+    FileName=$(basename -- "$FILE")
+    Extension="${FileName##*.}"
+    FName="${FileName%.*}"
+    local newName="${FName}_${randomString}.${Extension}"
+}
+
+function imgLogic
+{
+    imgFile=$1
+    saveDir=$2
+
+    if [ -f "$imgFile" ] && [[ $imgFile != .* ]]; then
+
+        ImgBaseName=$(basename "$imgFile")
+
+        if [ -f "${TARGET_DIR}/${ImgBaseName}" ]; then
+            ## Check Filesize
+            filesize_one=$(du -b "${TARGET_DIR}/${ImgBaseName}" | cut -f1)
+            filesize_two=$(du -b "$imgFile" | cut -f1)
+
+            if [ "$filesize_one" -eq "$filesize_two" ]; then
+                warn "Skipping ${imgFile}. Already Moved"
+            else
+                info "Renaming ${imgFile} to avoid conflict"
+
+                # randomString=$(openssl rand -base64 6)
+                # imgFileName=$(basename -- "$imgFile")
+                # imgExtension="${imgFileName##*.}"
+                # imgName="${imgFileName%.*}"
+                # newName="${imgName}_${randomString}.${imgExtension}"
+                newName=$(renameFile "$imgFile")
+                mv "${imgFile}" "${saveDir}/${newName}"
+                DFD=$((DFD + 1))
+            fi
+        else
+            # We have found a valid image file
+            info "Sorting ${ImgBaseName}"
+            mv "${imgFile}" "${saveDir}/${ImgBaseName}"
+            DFD=$((DFD + 1))
+        fi
+    fi
 }
 
 function sortPathToDir
 {
+    TARDIR="$1"
+
+    ## Sort all Images
     if [[ "$EXT_FLAG" -eq 0 ]]; then
-        for vid in $1.{png,PNG,jpg,JPG,jpeg,JPEG,eps,EPS,svg,SVG,pdf,PDF,ai}; do
-            if [ -f "$vid" ] && [[ $vid != .* ]]; then
-                VBN=$(basename "$vid")
-                if [ -f "${XV}/${VBN}" ]; then
-                    warn "Skipping ${vid}. Already Moved"
-                else
-                    # We have found a valid image file
-                    info "Sorting ${VBN}"
-                    cp "${vid}" "${XV}/${VBN}"
-                    DFD=$((DFD + 1))
-                fi
-            fi
+        for img in $1.{png,jpg,jpeg,eps,svg,ai}; do
+            imgLogic $img "${TARGET_DIR}"
+        done
+    else
+        ## Sort Images into Raster / Vector Subfolders
+        for img in $1.{jpg,jpeg,png}; do
+            imgLogic $img "${TARGET_DIR}/RASTERS"
+        done
+
+        for img in $1.{ai,eps,svg}; do
+            imgLogic $img "${TARGET_DIR}/VECTORS"
         done
     fi
 
-    if [[ "$EXT_FLAG" -eq 1 ]]; then
-        fontarray=("jpg,jpeg,png,JPG,JPEG,PNG" "ai,AI,eps,EPS,pdf,PDF" "svg,SVG")
+    ## Clean Out Any Bullshit Files
+    for badFile in $1.{txt,pdf,doc}; do
+        info "Removing Garbage File: ${badFile}"
+        rm "$badFile"
+    done
+}
 
-        for i in "${fontarray[@]}"; do
+function mergeLibraries
+{
+    info "Rsyncing Directories"
 
-            FIGFONT="${i}"
-            echo -e "\nFONT: ${BRED}${FIGFONT}${NORMAL}"
-            printFontBanner
+    RTarget="$TARGET_DIR"
 
-        done
+    rsync -abvuP "$RTarget" "$RDest"
 
-        for vid in $1.{png,PNG,jpg,JPG,jpeg,JPEG,eps,EPS,svg,SVG,pdf,PDF,ai}; do
-            EXT=""
-            if [ -f "$vid" ] && [[ $vid != .* ]]; then
-                VBN=$(basename "$vid")
-                if [ -f "${XV}/${EXT}/${VBN}" ]; then
-                    warn "Skipping ${vid}. Already Moved"
-                else
-                    # We have found a valid image file
-                    info "Sorting ${VBN}"
-                    cp "${vid}" "${XV}/${VBN}"
-                    DFD=$((DFD + 1))
-                fi
-            fi
-        done
-    fi
+    good "Finished Syncing!"
+}
+
+function filterIcons
+{
+    # Run Through Target Dir and move icons into subfolder
+    info "Sorting Icons into Subfolder"
+
+    filterCount=0
+
+    # Linux Only
+    # filesize=$(stat -c%s "$FILE")
+
+    # MacOS
+    # filesize=$(stat -f%z "$FILE")
+
+    # POSIX
+    #filesize=$(du -b "$FILE" | cut -f1)
+
+    mkdir -p "${TARGET_DIR}/ICONS"
+    mkdir -p "${TARGET_DIR}/ICONS_PNG"
+
+    for FILE in $TARGET_DIR/*.{svg,eps}; do
+        filesize=$(du -b "$FILE" | cut -f1)
+        if [ "$filesize" -lt 80000 ]; then
+            info "Moving Icon: $FILE"
+            mv "$FILE" "${TARGET_DIR}/ICONS"
+            filterCount=$((filterCount + 1))
+        fi
+    done
+
+    for FILE in $TARGET_DIR/*.png; do
+        filesize=$(du -b "$FILE" | cut -f1)
+        if [ "$filesize" -lt 100000 ]; then
+            info "Moving PNG Icon: $FILE"
+            mv "$FILE" "${TARGET_DIR}/ICONS_PNG"
+            filterCount=$((filterCount + 1))
+        fi
+    done
+
+    good "Sorted ${filterCount} Icon Files"
 }
 
 function sortImages
 {
-    mkdir -p "${XV}"
+    mkdir -p "${TARGET_DIR}"
+
+    ## Cleanup Filenames first
+    if ! command -v rename &>/dev/null; then
+        die "Install rename command to correct capitalized extension errors"
+    else
+        info "lowercasing extensions SVG to svg etc..."
+        rename -n 's/\.([^.]+)$/.\L$1/' *
+    fi
+
+    info "removing whitespace from all filenames"
+
+    find "$IMGPATH" -depth -name '* *' |
+        while IFS= read -r f; do mv -i "$f" "$(dirname "$f")/$(basename "$f" | tr ' ' _)"; done
+
+    good "Preliminary Work Completed. Processing Starting!"
 
     DFD=0
-    info "Merging all PNG, JPG, PDF, EPS, & SVG files into one folder."
+    info "Merging all |png, jpg, svg, ai| files"
 
     sortPathToDir "${IMGPATH}/*"
     sortPathToDir "${IMGPATH}/**/*"
     sortPathToDir "${IMGPATH}/**/**/*"
     sortPathToDir "${IMGPATH}/**/**/**/*"
 
-    good "Found ${DFD} Images"
+    good "Processed ${DFD} Images"
+
+    info "Cleaning Empty Directories"
+    find "${IMGPATH}/" -empty -type d -delete
+}
+
+function imageSortMain
+{
+    run_banner "Image Manager Activated"
+
+    if [[ "$SORT_FLAG" -eq 1 ]]; then
+        info "Starting Image Sort"
+        sortImages
+    fi
 
     if [[ "$DEDUPE_FLAG" -eq 1 ]]; then
-        run_banner "Removing Duplicates..."
-        removeDupes "$XV"
+        info "Starting Deduplication"
+        removeDupes "$TARGET_DIR"
+    fi
+
+    if [[ "$ICON_FLAG" -eq 1 ]]; then
+        info "Starting Icon Filtering"
+        filterIcons
     fi
 
     if [[ "$PACK_FLAG" -eq 1 ]]; then
-        run_banner "Compressing Images..."
-        packItUp "$XV"
+        info "Starting Image Compression"
+        packItUp "$TARGET_DIR"
     fi
 
     good "Script Finished!"
@@ -202,29 +349,41 @@ PACK_FLAG=0
 SORT_FLAG=0
 DEDUPE_FLAG=0
 EXT_FLAG=0
+ICON_FLAG=0
 PARAMS=""
 while (("$#")); do
     case "$1" in
         -p | --pack)
             PACK_FLAG=1
-            run_banner "Compressing Images..."
-            packItUp "$XV"
+            status "Compression Set"
+            #packItUp "$TARGET_DIR"
             shift
             ;;
         -d | --dedupe)
             DEDUPE_FLAG=1
-            run_banner "Removing Duplicates..."
-            removeDupes "$XV"
+            status "Deduplication Set"
+            #removeDupes "$TARGET_DIR"
             shift
             ;;
         -e | --extensions)
             EXT_FLAG=1
-            run_banner "Extension Sorting Enabled"
+            status "Extension Sort Set"
             shift
             ;;
-        -l | --location)
-            XV=$2
-            run_banner "SAVING TO: ${XV}"
+        -i | --icons)
+            ICON_FLAG=1
+            status "Icon Filter Set"
+            shift
+            ;;
+        -t | --target)
+            TARGET_DIR=$2
+            # if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
+            #     TARGET_DIR=$2
+            #     shift 2
+            # else
+            #     die "$1 is missing path option!" >&2
+            # fi
+            status "Saving to: ${TARGET_DIR}"
             shift
             ;;
         -s | --sort)
@@ -234,10 +393,14 @@ while (("$#")); do
                 shift 2
             else
                 die "$1 is missing path option!" >&2
-                exit 1
             fi
-            run_banner "Sorting Images..."
-            sortImages
+            status "Sorting: ${IMGPATH}"
+            #sortImages
+            shift
+            ;;
+        -m | --merge)
+            RTarget=$2
+            status "Merging Results into ${RDest}"
             shift
             ;;
         -h | -\? | --help) # help
@@ -245,8 +408,7 @@ while (("$#")); do
             exit
             ;;
         -* | --*=) # unsupported flags
-            warn "Error: Unsupported flag $1" >&2
-            exit 1
+            die "Unsupported flag $1" >&2
             ;;
         *) # preserve positional arguments
             PARAMS="$PARAMS $1"
@@ -257,7 +419,9 @@ done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
 
-if [ $DEDUPE_FLAG -eq 0 ] && [ $SORT_FLAG -eq 0 ] && [ $PACK_FLAG -eq 0 ]; then
+if [ $ICON_FLAG -eq 0 ] && [ $DEDUPE_FLAG -eq 0 ] && [ $SORT_FLAG -eq 0 ] && [ $PACK_FLAG -eq 0 ]; then
     show_help
     die "No Options Passed!"
+else
+    imageSortMain
 fi

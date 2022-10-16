@@ -34,7 +34,7 @@ export TTRV_EDITOR="/snap/bin/micro"
 export TTRV_BROWSER="/usr/bin/google-chrome"
 export TTRV_URLVIEWER="/home/lucky/.local/bin/urlscan"
 export IMGUR_CLIENT_ID="70c664b4a78f42f"
-export LC_ALL=C
+export LC_ALL='en_US.UTF-8'
 
 export XDG_DATA_HOME='/home/lucky'
 export YTFZF_THUMB_DISP_METHOD="chafa"
@@ -88,8 +88,8 @@ fi
 if _has "exa"; then
     alias ls='exa -lbhm@ --color-scale --group-directories-first'
     alias lsmod='exa -lbhm@ --color-scale --group-directories-first --sort=modified'
-    alias lt='exa --sort=modified -T -L 2 --group-directories-first'
-    alias lg='exa --color-scale -g'
+    alias lsmodtree='exa --sort=modified -T -L 2 --group-directories-first'
+    alias lsg='exa --color-scale -g'
     alias ll='/bin/ls --color=auto -alF'
 fi
 
@@ -110,6 +110,8 @@ if [[ $GIT_AUTHOR_NAME ]]; then
     git config --global color.diff auto
     git config --global color.status auto
     git config --global color.branch auto
+
+    git config --global advice.detachedHead false
     # git config --global credential.helper osxkeychain
 fi
 
