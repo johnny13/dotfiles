@@ -29,7 +29,7 @@ cd "${BASEDIR}"
 . "./_lab/helpers.sh"
 . "./_lab/helpers_fs.sh"
 . "./_lab/actions.sh"
-. "./_lab/libui.sh"
+#. "./_lab/libui.sh"
 
 # [R]un [A]s [R]oot?
 RAR="false"
@@ -180,7 +180,7 @@ echoChoiceSelect()
             pause
             echoMainMenuDisplay
             ;;
-        r)
+        i)
             echoMiniHeader
             boxInstallScripts
             pause
@@ -289,7 +289,7 @@ echoMainMenuDisplay()
 ##
 ## Declare Menu Items
 ## -------------------------
-declare -a coreItem=("[b] build .bashrc" "[s] build sh tools" "[n] new .sh script" "[r] build box builder")
+declare -a coreItem=("[b] build .bashrc" "[s] build sh tools" "[n] new .sh script" "[i] build installers")
 declare -a cliItem=("[x] Keyboard Help" "[k] CLI Apps" "[p] Pixel Art" "[8] todo idk")
 declare -a initItem=("[d] dotfile setup" "[a] add local dots" "[g] git commit")
 

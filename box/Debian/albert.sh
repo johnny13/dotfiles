@@ -14,13 +14,13 @@ echo ""
 echo "Updating!"
 echo ""
 
-sudo apt update
+sudo apt update -y
 
 echo ""
 echo "Installing!"
 echo ""
 
-sudo apt install albert
+sudo apt install -y albert
 
 echo ""
 echo "Finished!"

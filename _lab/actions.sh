@@ -197,7 +197,6 @@ dotBackup()
 ## --------------------------------------------------------
 shellScriptBinaryConversion()
 {
-
     local binDir
     local buildDir
     binDir="${HOME}/.local/rc/bin"
@@ -309,13 +308,32 @@ boxInstallScripts()
 {
     debFile="${BASEDIR}/box/Debian/RUN.sh"
     macFile="${BASEDIR}/box/Darwin/RUN.sh"
+    macTwoFile="${BASEDIR}/box/Darwin/FINISH.sh"
+    macSettings="${BASEDIR}/box/Darwin/MONTEREY.sh"
 
     OUTPUT_MSG "INFO" "building DEBIAN setup script..."
-    cat "${BASEDIR}/box/_header.sh" "${BASEDIR}/_lab/color_codes.sh" "${BASEDIR}/_lab/helpers_fs.sh" "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Debian/_install.sh" "${BASEDIR}/box/_end.sh" >$debFile
+    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/_box/_colors.sh" "${BASEDIR}/box/Debian/_install.sh" "${BASEDIR}/box/Debian/albert.sh" "${BASEDIR}/box/_end.sh" >$debFile
 
-    # OUTPUT_MSG "INFO" "building DARWIN setup script..."
-    # cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_install.sh" "${BASEDIR}/box/_end.sh" >$macFile
+    OUTPUT_MSG "INFO" "building DARWIN Apps script..."
+    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_utils.sh" "${BASEDIR}/box/Darwin/_monterey_prep.sh" "${BASEDIR}/box/Darwin/_monterey.sh" >$macFile
 
+    OUTPUT_MSG "INFO" "building DARWIN Apps script..."
+    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_utils.sh" "${BASEDIR}/box/Darwin/_monterey_pt2.sh" "${BASEDIR}/box/_end.sh" >$macTwoFile
+
+    OUTPUT_MSG "INFO" "building DARWIN Settings script..."
+    cat "${BASEDIR}/box/_start.sh" "${BASEDIR}/box/Darwin/_utils.sh" "${BASEDIR}/box/Darwin/_monterey_settings.sh" >$macSettings
+
+    deb_size_kb=$(du -k "$debFile" | cut -f1)
+    mac_size_kb=$(du -k "$macFile" | cut -f1)
+    mtf_size_kb=$(du -k "$macTwoFile" | cut -f1)
+    mty_size_kb=$(du -k "$macSettings" | cut -f1)
+
+    echo -e "\n\n\n\t\t${BCYN}Debian File Size:   ${BGRN}${deb_size_kb} KB${NORMAL}\n"
+    echo -e "\t\t ${BCYN}MacOS File Size:   ${BGRN}${mac_size_kb} KB${NORMAL}\n"
+    echo -e "\t\t ${BCYN} MacOS End Size:   ${BGRN}${mtf_size_kb} KB${NORMAL}\n"
+    echo -e "\t\t ${BCYN}  Monterey Size:   ${BGRN}${mty_size_kb} KB${NORMAL}\n"
+
+    echo -e "\n\t${BBLU}Files can be found at ${BGRN}box/${BYLW}<OS TYPE>${BGRN}/RUN.sh ${NORMAL}\n\n\n${BPUR}"
 }
 
 gitCommit()
@@ -557,7 +575,7 @@ buildNewScript()
     sed -i "s|$search|$replace|g" "${NFILE}"
 
     search='xSCRIPTDETAILSx'
-    
+
     replace="${details}"
     sed -i "s|$search|$replace|g" "${NFILE}"
 
@@ -625,4 +643,34 @@ addNewUser()
     touch "${BASEDIR}/local/${USERNAME}/sh/.gitkeep"
 
     OUTPUT_MSG "INFO" "Finished creating directories"
+}
+
+keyboardHelp()
+{
+    ansi::color 45
+
+    echo -e "\n\n"
+
+    cat <<EOF
+    Ctrl + A  Go to the beginning of the line you are currently typing on
+    Ctrl + E  Go to the end of the line you are currently typing on
+    Ctrl + L  Clears the Screen, similar to the clear command
+    Ctrl + U  Clears the line before the cursor position. If you are at the end of the line, clears the entire line.
+    Ctrl + H  Same as backspace
+    Ctrl + R  Let’s you search through previously used commands
+    Ctrl + C  Kill whatever you are running
+    Ctrl + D  Exit the current shell
+    Ctrl + Z  Puts whatever you are running into a suspended background process. fg restores it.
+    Ctrl + W  Delete the word before the cursor
+    Ctrl + K  Clear the line after the cursor
+    Ctrl + T  Swap the last two characters before the cursor
+    Esc + T  Swap the last two words before the cursor
+    Alt + F  Move cursor forward one word on the current line
+    Alt + B  Move cursor backward one word on the current line
+    Tab Auto-complete files and folder names
+EOF
+
+    ansi::resetForeground
+    echo -e "\n\n"
+
 }

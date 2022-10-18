@@ -2,23 +2,20 @@
 
 taskList()
 {
-    taskName "BOOTSTRAP START"
-    taskStatus "SETUP" "SYSTEM UPDATE & UPGRADE"
+    PMSG "INFO" "SETUP SYSTEM UPDATE & UPGRADE"
     miniLibs
-    lineBreak
+    ruleln "-" 60
 
-    taskName "SETUP"
-    taskStatus "HOME" "CREATE DIRECTORY"
+    PMSG "INFO" "SETUP HOME DIRECTORY"
     cd ~
     mkdir -p ./Developer
     cd ./Developer
-    lineBreak
+    ruleln "-" 60
 }
 
 packageTasks()
 {
-    taskName "INSTALL"
-    taskStatus "APT" "PACKAGE INSTALLER"
+    PMSG "INFO" "INSTALL APT PACKAGE INSTALLER"
     sleep 1
     c_question "Do you want to install base packages? [y/n]"
     read apt_answer
@@ -35,13 +32,12 @@ packageTasks()
             ;;
     esac
     sleep 2
-    lineBreak
+    ruleln "-" 60
 }
 
 SSHTasks()
 {
-    taskName "INSTALL"
-    taskStatus "SSH" "SECURE SETUP"
+    PMSG "INFO" "INSTALL SSH SECURE SETUP"
     sleep 1
     c_question "Do you want to install base packages? [y/n]"
     read apt_answer
@@ -58,13 +54,12 @@ SSHTasks()
             ;;
     esac
     sleep 2
-    lineBreak
+    ruleln "-" 60
 }
 
 EXTRATasks()
 {
-    taskName "INSTALL"
-    taskStatus "CODE" "PHP APACHE NODE.JS"
+    PMSG "INFO" "INSTALL PHP APACHE NODE.JS"
     sleep 1
     c_question "Do you want to continue with Code & Webserver Tasks? [y/n]"
     read apt_answer
@@ -81,13 +76,12 @@ EXTRATasks()
             ;;
     esac
     sleep 2
-    lineBreak
+    ruleln "-" 60
 }
 
 devPackageTasks()
 {
-    taskName "INSTALL"
-    taskStatus "APT" "DEV PACKAGE INSTALLER"
+    PMSG "INFO" "DEV PACKAGE INSTALLER"
     sleep 1
     c_question "Do you want to install developer packages? [y/n]"
     read apt_answer
@@ -104,43 +98,39 @@ devPackageTasks()
             ;;
     esac
     sleep 2
-    lineBreak
+    ruleln "-" 60
 }
 
 extraTasks()
 {
-    taskName "GITHUB"
-    taskStatus "ADD" "GH CLI TOOL"
+    PMSG "INFO" "GITHUB GH CLI TOOL"
     addGHSources
-    lineBreak
+    ruleln "-" 60
 
-    taskName "APACHE2"
-    taskStatus "HTTP" "APACHE WEBSERVER INSTALL"
+    PMSG "INFO" "APACHE2 WEBSERVER INSTALL"
     addApache
-    lineBreak
+    ruleln "-" 60
 
-    taskName "PHP-7 DEBIAN"
-    taskStatus "GIT" "FETCHING REPO"
+    PMSG "INFO" "PHP-7 DEBIAN FETCHING REPO"
     git clone https://github.com/kasparsd/php-7-debian.git php7
     cd php7
     ./build.sh
     sudo ./install.sh
     sudo ln -s /usr/local/php7/bin/php /usr/local/bin/php
-    lineBreak
+    ruleln "-" 60
 
-    taskName "Node.js"
-    taskStatus "NVM" "NODE VERSION MANAGER"
+    PMSG "INFO" "Node.js NVM NODE VERSION MANAGER"
     addNode
-    lineBreak
+    ruleln "-" 60
 
     finishEcho "DEBIAN FUNCTIONS"
 }
 
 ppaTask()
 {
-    taskName "ADD SOURCES"
+    PMSG "INFO" "ADD SOURCES"
     sleep 1
-    taskStatus "APT" "ADD PPA REPOS FOR GIT, DOCKER, NGINX ETC"
+    PMSG "INFO" "ADD PPA REPOS FOR GIT, DOCKER, NGINX ETC"
     sleep 1
     c_question "Do you want to add the PPAs? [y/n]"
     read ppa_answer
@@ -158,7 +148,7 @@ ppaTask()
             ;;
     esac
 
-    lineBreak
+    ruleln "-" 60
     sleep 2
 }
 
@@ -172,15 +162,15 @@ addNode()
     source ~/.bashrc
 
     nvm install --lts
-    taskStatus "CONFIRM" "NODE, NVM, NPM INSTALLED"
+    PMSG "INFO" "NODE, NVM, NPM INSTALLED"
 
     nvm current
     npm --version
 
-    taskStatus "YARN" "INSTALLING PACKAGE MANAGER"
+    PMSG "INFO" "INSTALLING YARN PACKAGE MANAGER"
     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-    sudo apt update && sudo apt install -y yarn
+    sudo apt update -y && sudo apt install -y yarn
 
 }
 
@@ -227,18 +217,18 @@ addGHSources()
 
     sudo add-apt-repository universe
 
-    sudo apt update
+    sudo apt update -y
     sudo apt install -y gh
 }
 
 # Quickly install minimum amount of packages to make things work
 miniLibs()
 {
-    sudo apt-get update && sudo apt-get upgrade -y >>${LOGFILE}
-    sudo apt-get dist-upgrade -f >>${LOGFILE}
-    sudo apt autoremove -y >>${LOGFILE}
+    sudo apt-get update -y && sudo apt-get upgrade -y
+    sudo apt-get dist-upgrade -f
+    sudo apt autoremove -y
 
-    sudo apt install -y git ufw wget curl sudo gcc build-essential software-properties-common unzip >>${LOGFILE}
+    sudo apt install -y git ufw wget curl sudo gcc build-essential software-properties-common unzip
 }
 
 libraries()
@@ -254,7 +244,7 @@ libraries()
         for i in $(cat ./packages.txt); do
             if ! dpkg-query -W -f='${Status} ${Version}\n' ${i} | grep "^install ok" >/dev/null; then
                 c_install "Installing package ${i} "
-                sudo apt-get install -y ${i} >>${LOGFILE}
+                sudo apt-get install -y ${i}
             else
                 c_success "Package ${i} is already installed. Skipping..."
             fi
@@ -263,16 +253,16 @@ libraries()
         c_error "No Packages file found. Skipping package installation..."
     fi
 
-    # sudo apt install -y xutils-dev dialog nano micro sassc  checkinstall zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev openssl libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev >>${LOGFILE}
+    # sudo apt install -y xutils-dev dialog nano micro sassc  checkinstall zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev openssl libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 
-    # sudo apt install -y lsb-release apt-transport-https ca-certificates openssl openssh-server openssh-client openjdk-14-jdk openjdk-14-jre parted pastebinit qemu-kvm rsync shc ssh-import-id ssh-askpass-gnome ssl-cert synaptic spacefm unrar vagrant xdotool xclip zip yadm android-file-transfer android-sdk-platform-tools-common ansiweather caca-utils cmake automake debconf dconf-cli dkms fo nt-manager font-viewer fontconfig ftp fuse gawk gettext ghostscript gparted gpart gpg htop iftop imagemagick jo >>${LOGFILE}
+    # sudo apt install -y lsb-release apt-transport-https ca-certificates openssl openssh-server openssh-client openjdk-14-jdk openjdk-14-jre parted pastebinit qemu-kvm rsync shc ssh-import-id ssh-askpass-gnome ssl-cert synaptic spacefm unrar vagrant xdotool xclip zip yadm android-file-transfer android-sdk-platform-tools-common ansiweather caca-utils cmake automake debconf dconf-cli dkms fo nt-manager font-viewer fontconfig ftp fuse gawk gettext ghostscript gparted gpart gpg htop iftop imagemagick jo
 
-    # sudo apt install -y tcl-tls python-openssl mcrypt python3-m2crypto gnupg2 dirmngr git-core libreadline-dev libyaml-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev >>${LOGFILE}
+    # sudo apt install -y tcl-tls python-openssl mcrypt python3-m2crypto gnupg2 dirmngr git-core libreadline-dev libyaml-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev
 
     # python3 ruby sassc apache2 mysql-server php-cli php-mbstring xterm
 
-    sudo apt update && sudo apt upgrade -y >>${LOGFILE}
-    sudo apt autoremove -y >>${LOGFILE}
+    sudo apt update -y && sudo apt upgrade -y
+    sudo apt autoremove -y
 }
 
 devLibraries()
@@ -288,7 +278,7 @@ devLibraries()
         for i in $(cat ./dev_packages.txt); do
             if ! dpkg-query -W -f='${Status} ${Version}\n' ${i} | grep "^install ok" >/dev/null; then
                 c_install "Installing DEV package ${i} "
-                sudo apt-get install -y ${i} >>${LOGFILE}
+                sudo apt-get install -y ${i}
             else
                 c_success "DEV Package ${i} is already installed. Skipping..."
             fi
@@ -297,8 +287,8 @@ devLibraries()
         c_error "No DEV Packages file found. Skipping DEV package installation..."
     fi
 
-    sudo apt update && sudo apt upgrade -y >>${LOGFILE}
-    sudo apt autoremove -y >>${LOGFILE}
+    sudo apt update -y && sudo apt upgrade -y
+    sudo apt autoremove -y
 }
 
 function add_ppas()
@@ -339,9 +329,9 @@ function add_ppas()
 
 function update_system()
                          {
-    sudo apt-get update && sudo apt-get upgrade -y >>${LOGFILE}
-    sudo apt-get dist-upgrade -f >>${LOGFILE}
-    sudo apt autoremove -y >>${LOGFILE}
+    sudo apt-get update -y && sudo apt-get upgrade -y
+    sudo apt-get dist-upgrade -f
+    sudo apt autoremove -y
 }
 
 install_ssh()
