@@ -1,17 +1,12 @@
-logo.html
-
 .history
 
-new/PHP
-new/NODE
+vault/*.sh
 
-_lab/dose.sh
+.DS_Store
 
-vault
+**/.DS_Store
 
-__ASSETS
+.temp
 
-local
-local/lucky
-
-TODO
+workspace.code-workspace
+*.code-workspace
