@@ -501,11 +501,11 @@ addNewUser()
     mkdir -p "${BASEDIR}/local/${USERNAME}"
     mkdir -p "${BASEDIR}/local/${USERNAME}/copy"
     mkdir -p "${BASEDIR}/local/${USERNAME}/link"
-    mkdir -p "${BASEDIR}/local/${USERNAME}/sh"
+    mkdir -p "${BASEDIR}/local/${USERNAME}/scripts"
 
     touch "${BASEDIR}/local/${USERNAME}/copy/.gitkeep"
     touch "${BASEDIR}/local/${USERNAME}/link/.gitkeep"
-    touch "${BASEDIR}/local/${USERNAME}/sh/.gitkeep"
+    touch "${BASEDIR}/local/${USERNAME}/scripts/.gitkeep"
 
     OUTPUT_MSG "INFO" "Finished creating directories"
 }
