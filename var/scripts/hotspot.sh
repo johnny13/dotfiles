@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 service network-manager stop
 sleep 1
@@ -20,7 +20,7 @@ macchanger --mac 00:11:22:33:44:66 new1
 ifconfig new0 up
 ifconfig new1 up
 
-ifconfig new1 192.168.0.101 up  #192.168.0.101 - the same IP defined for router in 'udhcpd.conf' file 
+ifconfig new1 192.168.0.101 up  #192.168.0.101 - the same IP defined for router in 'udhcpd.conf' file
 hostapd /etc/hostapd.conf &
 sleep 2
 
@@ -31,6 +31,6 @@ sleep 10
 
 udhcpc -i new0
 
-echo "1" > /proc/sys/net/ipv4/ip_forward
+echo "1" >/proc/sys/net/ipv4/ip_forward
 iptables --table nat --append POSTROUTING --out-interface new0 -j MASQUERADE
 iptables --append FORWARD --in-interface new1 -j ACCEPT

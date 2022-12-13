@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 ##
 ## CLI_HEADER.sh
@@ -133,7 +133,8 @@ function printAllBanners()
 ## Actual Workhorse of the script.
 ## Prints what you want printed.
 ## -------------------------------
-function printFontBanner(){
+function printFontBanner()
+                          {
 
     if [ "$DO_LOLCAT" == 0 ]; then
         echo -e "\n\n${PRIMARY}"

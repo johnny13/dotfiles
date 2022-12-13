@@ -1,19 +1,22 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 . "/home/lucky/.local/rc/lib/libui-sh/libui-colors.sh"
 . "/home/lucky/.local/rc/lib/libui-sh/libui.sh"
 
-function shead {
+function shead
+{
 	echo -e "\n ${BGreen} ====================== \n"
 	echo -e "\t${BCyan}${1}"
 	echo -e "\n ${BGreen} ====================== ${Color_Off} \n"
 }
 
-function etxt {
+function etxt
+{
 	echo -e "  ${BPurple}${1}${Color_Off}"
 }
 
-function ecmd {
+function ecmd
+{
 	echo -e "\n  ${BCyan} Running Command:\n\t${On_Purple}${BWhite}  > ${1}  ${Color_Off}\n\n"
 }
 
@@ -54,11 +57,9 @@ ecmd "ssh -D $LOCAL_SOCKS_PORT -fqgN $TERMUX_USER@$TERMUX_IP -p $TERMUX_PORT"
 
 ssh -D $LOCAL_SOCKS_PORT -fqgN $TERMUX_USER@$TERMUX_IP -p $TERMUX_PORT
 
-
 # ===================================================
 shead "SSHuttle Startup"
 etxt "Systemwide Transparent Proxy"
 ecmd "sshuttle -r $TERMUX_USER@$TERMUX_IP:$TERMUX_PORT 0/0 -x $HOSTNAME -x 0/0"
 
 sshuttle -r $TERMUX_USER@$TERMUX_IP:$TERMUX_PORT 0/0 -x $HOSTNAME -x 0/0
-

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 nvm use default
 
@@ -37,9 +37,8 @@ echo "                                                                          
 echo -e "${BCYN}█████████████████████████████████████████████████████████████████████████████████████████"
 echo -e "${NORMAL}"
 
-array=( Merlin1 Graffiti Chunky Sub-Zero Modular Rounded cosmic drpepper "Nancyj-Fancy" "3D-ASCII" gangshit2 cholo1 Crazy "Stronger Than All" philly "Star Wars" )
-for i in "${array[@]}"
-do
+array=(Merlin1 Graffiti Chunky Sub-Zero Modular Rounded cosmic drpepper "Nancyj-Fancy" "3D-ASCII" gangshit2 cholo1 Crazy "Stronger Than All" philly "Star Wars")
+for i in "${array[@]}"; do
 	echo -e "${BYLW}  --| ASCII: ${BBLU}${i} ${BYLW}|--"
 	echo -e "${BPUR}  figlet -f \"${i}\" \"${i}\" ${NORMAL}"
 	figlet -w 120 -c -f "${i}" "${i}" | lolcatjs
@@ -47,16 +46,14 @@ do
 	echo " "
 done
 
-
 echo ""
 echo ""
 echo -e "${BBLU}xxxX][XxxxxxxX][XxxxxxxX][XxxxxxxX][XxxxxxxX][XxxxxxxX][XxxxxxxX][XxxxxxxX][XxxxxxxX][Xxxx${NORMAL}"
 echo ""
 echo ""
 
-array=( Elite "DOS Rebel" Bloody Electronic "ANSI Regular" "ANSI Shadow" maxiwi miniwi rustofat pagga smmono12 future )
-for i in "${array[@]}"
-do
+array=(Elite "DOS Rebel" Bloody Electronic "ANSI Regular" "ANSI Shadow" maxiwi miniwi rustofat pagga smmono12 future)
+for i in "${array[@]}"; do
 	echo -e "${BYLW}  --|  ANSI: ${BBLU}${i} ${BYLW}|--"
 	echo -e "${BPUR}  figlet -f \"${i}\" \"${i}\" ${NORMAL}"
 	figlet -w 120 -c -f "${i}" "${i}" | lolcatjs
@@ -66,6 +63,4 @@ done
 
 echo -e "${NORMAL}"
 echo -e "                                    ${BPUR}--- fin ---${NORMAL}"
-echo "" 
-
-
+echo ""

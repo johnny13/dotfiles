@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 #/ ----------------------------------------
 #/ |  DR. BASH'S COLOR TESTING FUN HOUSE  |
 #/ ----------------------------------------
@@ -107,7 +107,8 @@ function print_blocks
     done
 }
 
-function theTwoFiveSix {
+function theTwoFiveSix
+                       {
     print_run 0 16 # The first 16 colours are spread over the whole spectrum
     printf "\n"
     print_blocks 16 231 6 6 3 # 6x6x6 colour cube between 16 and 231 inclusive
@@ -250,7 +251,8 @@ function twofivesixcolor()
     echo -e "\n"
 }
 
-twentyfourcolor() {
+twentyfourcolor()
+                  {
     echo
     echo "Currently Not Working"
     echo
@@ -332,9 +334,9 @@ function sixcolors
 
     cat <<EOF
 
-     ${redf}▒▒▒▒${reset} ${boldon}${redf}▒▒${reset}   ${greenf}▒▒▒▒${reset} ${boldon}${greenf}▒▒${reset}   ${yellowf}▒▒▒▒${reset} ${boldon}${yellowf}▒▒${reset}   ${bluef}▒▒▒▒${reset} ${boldon}${bluef}▒▒${reset}   ${purplef}▒▒▒▒${reset} ${boldon}${purplef}▒▒${reset}   ${cyanf}▒▒▒▒${reset} ${boldon}${cyanf}▒▒${reset} 
-     ${redf}▒▒ ■${reset} ${boldon}${redf}▒▒${reset}   ${greenf}▒▒ ■${reset} ${boldon}${greenf}▒▒${reset}   ${yellowf}▒▒ ■${reset} ${boldon}${yellowf}▒▒${reset}   ${bluef}▒▒ ■${reset} ${boldon}${bluef}▒▒${reset}   ${purplef}▒▒ ■${reset} ${boldon}${purplef}▒▒${reset}   ${cyanf}▒▒ ■${reset} ${boldon}${cyanf}▒▒${reset}  
-     ${redf}▒▒ ${reset}${boldon}${redf}▒▒▒▒${reset}   ${greenf}▒▒ ${reset}${boldon}${greenf}▒▒▒▒${reset}   ${yellowf}▒▒ ${reset}${boldon}${yellowf}▒▒▒▒${reset}   ${bluef}▒▒ ${reset}${boldon}${bluef}▒▒▒▒${reset}   ${purplef}▒▒ ${reset}${boldon}${purplef}▒▒▒▒${reset}   ${cyanf}▒▒ ${reset}${boldon}${cyanf}▒▒▒▒${reset}  
+     ${redf}▒▒▒▒${reset} ${boldon}${redf}▒▒${reset}   ${greenf}▒▒▒▒${reset} ${boldon}${greenf}▒▒${reset}   ${yellowf}▒▒▒▒${reset} ${boldon}${yellowf}▒▒${reset}   ${bluef}▒▒▒▒${reset} ${boldon}${bluef}▒▒${reset}   ${purplef}▒▒▒▒${reset} ${boldon}${purplef}▒▒${reset}   ${cyanf}▒▒▒▒${reset} ${boldon}${cyanf}▒▒${reset}
+     ${redf}▒▒ ■${reset} ${boldon}${redf}▒▒${reset}   ${greenf}▒▒ ■${reset} ${boldon}${greenf}▒▒${reset}   ${yellowf}▒▒ ■${reset} ${boldon}${yellowf}▒▒${reset}   ${bluef}▒▒ ■${reset} ${boldon}${bluef}▒▒${reset}   ${purplef}▒▒ ■${reset} ${boldon}${purplef}▒▒${reset}   ${cyanf}▒▒ ■${reset} ${boldon}${cyanf}▒▒${reset}
+     ${redf}▒▒ ${reset}${boldon}${redf}▒▒▒▒${reset}   ${greenf}▒▒ ${reset}${boldon}${greenf}▒▒▒▒${reset}   ${yellowf}▒▒ ${reset}${boldon}${yellowf}▒▒▒▒${reset}   ${bluef}▒▒ ${reset}${boldon}${bluef}▒▒▒▒${reset}   ${purplef}▒▒ ${reset}${boldon}${purplef}▒▒▒▒${reset}   ${cyanf}▒▒ ${reset}${boldon}${cyanf}▒▒▒▒${reset}
 
 EOF
 }
@@ -358,7 +360,7 @@ function colordna
       ${f1}  █-${bld}█${rst}     ${f2}  █-${bld}█${rst}     ${f3}  █-${bld}█${rst}     ${f4}  █-${bld}█${rst}     ${f5}  █-${bld}█${rst}     ${f6}  █-${bld}█${rst}
         ${f1} █${rst}        ${f2} █${rst}        ${f3} █${rst}        ${f4} █${rst}        ${f5} █${rst}        ${f6} █${rst}
        ${f1}${bld} █-${rst}${f1}█${rst}      ${f2}${bld} █_${rst}${f2}█${rst}      ${f3}${bld} █-${rst}${f3}█${rst}      ${f4}${bld} █-${rst}${f4}█${rst}      ${f5}${bld} █-${rst}${f5}█${rst}      ${f6}${bld} █-${rst}${f6}█${rst}
-      ${f1}${bld} █---${rst}${f1}█${rst}    ${f2}${bld} █---${rst}${f2}█${rst}    ${f3}${bld} █---${rst}${f3}█${rst}    ${f4}${bld} █---${rst}${f4}█${rst}    ${f5}${bld} █---${rst}${f5}█${rst}    ${f6}${bld} █---${rst}${f6}█${rst} 
+      ${f1}${bld} █---${rst}${f1}█${rst}    ${f2}${bld} █---${rst}${f2}█${rst}    ${f3}${bld} █---${rst}${f3}█${rst}    ${f4}${bld} █---${rst}${f4}█${rst}    ${f5}${bld} █---${rst}${f5}█${rst}    ${f6}${bld} █---${rst}${f6}█${rst}
      ${f1}${bld} █-----${rst}${f1}█${rst}  ${f2}${bld} █-----${rst}${f2}█${rst}  ${f3}${bld} █-----${rst}${f3}█${rst}  ${f4}${bld} █-----${rst}${f4}█${rst}  ${f5}${bld} █-----${rst}${f5}█${rst}  ${f6}${bld} █-----${rst}${f6}█${rst}
       ${f1}${bld} █---${rst}${f1}█${rst}    ${f2}${bld} █---${rst}${f2}█${rst}    ${f3}${bld} █---${rst}${f3}█${rst}    ${f4}${bld} █---${rst}${f4}█${rst}    ${f5}${bld} █---${rst}${f5}█${rst}    ${f6}${bld} █---${rst}${f6}█${rst}
        ${f1}${bld} █-${rst}${f1}█${rst}      ${f2}${bld} █-${rst}${f2}█${rst}      ${f3}${bld} █-${rst}${f3}█${rst}      ${f4}${bld} █-${rst}${f4}█${rst}      ${f5}${bld} █-${rst}${f5}█${rst}      ${f6}${bld} █-${rst}${f6}█${rst}
@@ -370,7 +372,7 @@ function colordna
       ${f1}  █-${bld}█${rst}     ${f2}  █-${bld}█${rst}     ${f3}  █-${bld}█${rst}     ${f4}  █-${bld}█${rst}     ${f5}  █-${bld}█${rst}     ${f6}  █-${bld}█${rst}
         ${f1} █${rst}         ${f2}█${rst}        ${f3} █${rst}        ${f4} █${rst}        ${f5} █${rst}        ${f6} █${rst}
        ${f1}${bld} █-${rst}${f1}█${rst}      ${f2}${bld} █_${rst}${f2}█${rst}      ${f3}${bld} █-${rst}${f3}█${rst}      ${f4}${bld} █-${rst}${f4}█${rst}      ${f5}${bld} █-${rst}${f5}█${rst}      ${f6}${bld} █-${rst}${f6}█${rst}
-      ${f1}${bld} █---${rst}${f1}█${rst}    ${f2}${bld} █---${rst}${f2}█${rst}    ${f3}${bld} █---${rst}${f3}█${rst}    ${f4}${bld} █---${rst}${f4}█${rst}    ${f5}${bld} █---${rst}${f5}█${rst}    ${f6}${bld} █---${rst}${f6}█${rst} 
+      ${f1}${bld} █---${rst}${f1}█${rst}    ${f2}${bld} █---${rst}${f2}█${rst}    ${f3}${bld} █---${rst}${f3}█${rst}    ${f4}${bld} █---${rst}${f4}█${rst}    ${f5}${bld} █---${rst}${f5}█${rst}    ${f6}${bld} █---${rst}${f6}█${rst}
      ${f1}${bld} █-----${rst}${f1}█${rst}  ${f2}${bld} █-----${rst}${f2}█${rst}  ${f3}${bld} █-----${rst}${f3}█${rst}  ${f4}${bld} █-----${rst}${f4}█${rst}  ${f5}${bld} █-----${rst}${f5}█${rst}  ${f6}${bld} █-----${rst}${f6}█${rst}
       ${f1}${bld} █---${rst}${f1}█${rst}    ${f2}${bld} █---${rst}${f2}█${rst}    ${f3}${bld} █---${rst}${f3}█${rst}    ${f4}${bld} █---${rst}${f4}█${rst}    ${f5}${bld} █---${rst}${f5}█${rst}    ${f6}${bld} █---${rst}${f6}█${rst}
        ${f1}${bld} █-${rst}${f1}█${rst}      ${f2}${bld} █-${rst}${f2}█${rst}      ${f3}${bld} █-${rst}${f3}█${rst}      ${f4}${bld} █-${rst}${f4}█${rst}      ${f5}${bld} █-${rst}${f5}█${rst}      ${f6}${bld} █-${rst}${f6}█${rst}
@@ -382,29 +384,30 @@ function colordna
 EOF
 }
 
-function ghostColors {
-    f=3 
+function ghostColors
+                     {
+    f=3
     b=4
     for j in f b; do
-      for i in {0..7}; do
-        printf -v $j$i %b "\e[${!j}${i}m"
-      done
+        for i in {0..7}; do
+            printf -v $j$i %b "\e[${!j}${i}m"
+        done
     done
     bld=$'\e[1m'
     rst=$'\e[0m'
     inv=$'\e[7m'
-    cat << EOF
+    cat <<EOF
 
-$f1    ▄▄▄      $f2    ▄▄▄      $f3    ▄▄▄      $f4    ▄▄▄      $f5    ▄▄▄      $f6    ▄▄▄     
-$f1   ▀█▀██  ▄  $f2   ▀█▀██  ▄  $f3   ▀█▀██  ▄  $f4   ▀█▀██  ▄  $f5   ▀█▀██  ▄  $f6   ▀█▀██  ▄ 
-$f1 ▀▄██████▀   $f2 ▀▄██████▀   $f3 ▀▄██████▀   $f4 ▀▄██████▀   $f5 ▀▄██████▀   $f6 ▀▄██████▀  
-$f1    ▀█████   $f2    ▀█████   $f3    ▀█████   $f4    ▀█████   $f5    ▀█████   $f6    ▀█████  
+$f1    ▄▄▄      $f2    ▄▄▄      $f3    ▄▄▄      $f4    ▄▄▄      $f5    ▄▄▄      $f6    ▄▄▄
+$f1   ▀█▀██  ▄  $f2   ▀█▀██  ▄  $f3   ▀█▀██  ▄  $f4   ▀█▀██  ▄  $f5   ▀█▀██  ▄  $f6   ▀█▀██  ▄
+$f1 ▀▄██████▀   $f2 ▀▄██████▀   $f3 ▀▄██████▀   $f4 ▀▄██████▀   $f5 ▀▄██████▀   $f6 ▀▄██████▀
+$f1    ▀█████   $f2    ▀█████   $f3    ▀█████   $f4    ▀█████   $f5    ▀█████   $f6    ▀█████
 $f1       ▀▀▀▀▄ $f2       ▀▀▀▀▄ $f3       ▀▀▀▀▄ $f4       ▀▀▀▀▄ $f5       ▀▀▀▀▄ $f6       ▀▀▀▀▄
 $bld
-$f1    ▄▄▄      $f2    ▄▄▄      $f3    ▄▄▄      $f4    ▄▄▄      $f5    ▄▄▄      $f6    ▄▄▄     
-$f1   ▀█▀██  ▄  $f2   ▀█▀██  ▄  $f3   ▀█▀██  ▄  $f4   ▀█▀██  ▄  $f5   ▀█▀██  ▄  $f6   ▀█▀██  ▄ 
-$f1 ▀▄██████▀   $f2 ▀▄██████▀   $f3 ▀▄██████▀   $f4 ▀▄██████▀   $f5 ▀▄██████▀   $f6 ▀▄██████▀  
-$f1    ▀█████   $f2    ▀█████   $f3    ▀█████   $f4    ▀█████   $f5    ▀█████   $f6    ▀█████  
+$f1    ▄▄▄      $f2    ▄▄▄      $f3    ▄▄▄      $f4    ▄▄▄      $f5    ▄▄▄      $f6    ▄▄▄
+$f1   ▀█▀██  ▄  $f2   ▀█▀██  ▄  $f3   ▀█▀██  ▄  $f4   ▀█▀██  ▄  $f5   ▀█▀██  ▄  $f6   ▀█▀██  ▄
+$f1 ▀▄██████▀   $f2 ▀▄██████▀   $f3 ▀▄██████▀   $f4 ▀▄██████▀   $f5 ▀▄██████▀   $f6 ▀▄██████▀
+$f1    ▀█████   $f2    ▀█████   $f3    ▀█████   $f4    ▀█████   $f5    ▀█████   $f6    ▀█████
 $f1       ▀▀▀▀▄ $f2       ▀▀▀▀▄ $f3       ▀▀▀▀▄ $f4       ▀▀▀▀▄ $f5       ▀▀▀▀▄ $f6       ▀▀▀▀▄
 $rst
 EOF

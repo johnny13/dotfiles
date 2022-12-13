@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # 1. Search for text in files using Ripgrep
 # 2. Interactively narrow down the list using fzf

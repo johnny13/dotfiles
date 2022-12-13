@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 ##
 ## [DESC] Automatically generates random legal mac address
@@ -10,7 +10,8 @@
 ## [OPTS] number (optional amount of addresses to generate)
 ##
 
-function generate_random_mac() {
+function generate_random_mac()
+{
 	i=0
 	macMax=$1
 

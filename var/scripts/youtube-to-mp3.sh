@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 echo ""
 echo "  ${BGRN}Downloading video ${1}${NORMAL}"

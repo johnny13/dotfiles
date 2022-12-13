@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 resize -s 20 100                        #resize terminal
 
 clear                                   # Clear the screen.
@@ -25,4 +25,4 @@ for n in {1..50}; do curl --url "smtps://smtp.gmail.com:465" --ssl-reqd --mail-f
 
 #to use other email services simply change "smtps://smtp.gmail.com:465" to match SMTP settings
 
-#for n in {1..50}; 50 = how many times to send, value can be changed 
+#for n in {1..50}; 50 = how many times to send, value can be changed

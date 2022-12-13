@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # ------------------ ---------  ------   ----    ---     --      -
 #   dyn_dns.sh
@@ -48,25 +48,40 @@ fi
 #   OUTPUT HEADERS & LOGGING
 # ------------------ ---------  ------   ----    ---     --      -
 readonly LOG_FILE="/tmp/${SCRIPTNAME}.log"
-info() { echo "${BOLD}${WHT}${B_BLU}[INFO]${NORMAL}${BLU} ➜${NORMAL} $@" | tee -a "$LOG_FILE" >&2; }
-success() { echo "${BOLD}${WHT}${B_GRN}[ OK ]${NORMAL}${GRN} ✔${NORMAL} $@" | tee -a "$LOG_FILE" >&2; }
-warning() { echo "${BOLD}${WHT}${B_YLW}[WARN]${NORMAL}${YLW} ➜${NORMAL} $@" | tee -a "$LOG_FILE" >&2; }
-error() { echo "${BOLD}${WHT}${B_RED}[FAIL]${NORMAL}${RED} ✖${NORMAL} $@" | tee -a "$LOG_FILE" >&2; }
-fatal() {
+info()
+       {
+         echo "${BOLD}${WHT}${B_BLU}[INFO]${NORMAL}${BLU} ➜${NORMAL} $@" | tee -a "$LOG_FILE" >&2
+}
+success()
+          {
+            echo "${BOLD}${WHT}${B_GRN}[ OK ]${NORMAL}${GRN} ✔${NORMAL} $@" | tee -a "$LOG_FILE" >&2
+}
+warning()
+          {
+            echo "${BOLD}${WHT}${B_YLW}[WARN]${NORMAL}${YLW} ➜${NORMAL} $@" | tee -a "$LOG_FILE" >&2
+}
+error()
+        {
+          echo "${BOLD}${WHT}${B_RED}[FAIL]${NORMAL}${RED} ✖${NORMAL} $@" | tee -a "$LOG_FILE" >&2
+}
+fatal()
+        {
   echo " ${BOLD}${WHT}${B_RED}[DIE!]${NORMAL}${RED} ✖${NORMAL} $@" | tee -a "$LOG_FILE" >&2
   exit 1
 }
 
 ## Print a horizontal rule
 ## @param $1 default line break char. ie: -
-function ruleln() {
+function ruleln()
+                  {
   printf -v _hr "%*s" "$(tput cols)" && echo "${_hr// /${1--}}"
 }
 
 ## Print horizontal ruler with message
 ## @param $1 message we are going to display
 ## @param $2 default line break char. ie: -
-function rulemsg() {
+function rulemsg()
+                   {
   if [ "$#" -eq 0 ]; then
     echo "Usage: rulemsg MESSAGE [RULE_CHARACTER]"
     return 1
@@ -88,12 +103,14 @@ function rulemsg() {
 }
 
 ## READS FROM THE COMMENTS AT THE TOP OF THE FILE
-usage() {
+usage()
+        {
   grep '^# DETAILS:' "$0"
   echo ""
   exit 0
 }
-version() {
+version()
+          {
   grep '^# VERSION:' "$0"
   echo ""
   exit 0
@@ -106,7 +123,8 @@ expr "$*" : ".*--version" >/dev/null && version
 # Non destructive exit for when script exits naturally.
 # Usage: Add this function at the end of every script
 # -----------------------------------
-function safeExit() {
+function safeExit()
+                    {
   # Delete temp files, if any
   if is_dir "${tmpDir}"; then
     rm -r "${tmpDir}"
@@ -120,7 +138,8 @@ function safeExit() {
 # Any actions that should be taken if the script is prematurely
 # exited.  Always call this function at the top of your script.
 # -----------------------------------
-function trapCleanup() {
+function trapCleanup()
+                       {
   echo ""
   if is_dir "${tmpDir}"; then
     rm -r "${tmpDir}"
@@ -128,27 +147,32 @@ function trapCleanup() {
   die "Exit trapped." # Edit this if you like.
 }
 
-function optList() {
+function optList()
+                   {
   echo "${BGRN}list [l] command passed${NORMAL}"
   exit 1
 }
 
-function optX() {
+function optX()
+                {
   echo "${BBLU}Xtreme [x] command passed${NORMAL}"
   exit 1
 }
 
-function logicUnknown() {
+function logicUnknown()
+                        {
   printf "${B_RED}[FAIL]${NORMAL} You made an unknown request.\nGet it together!${NORMAL}\n"
   exit 1
 }
 
 # Define a timestamp function
-function timestamp() {
+function timestamp()
+                     {
   date +"%Y-%m-%d_%H"
 }
 
-function checkDNS() {
+function checkDNS()
+                    {
   echo ""
   echo "  [ IP ADDRESS DETAILS ]"
   ruleln
@@ -183,7 +207,8 @@ function checkDNS() {
 
 }
 
-function UPDATEAFRAID() {
+function UPDATEAFRAID()
+                        {
   apikeyfile="/Users/eve/.afraid-dyndns.dynkey"
 
   echo ""
@@ -230,70 +255,80 @@ function UPDATEAFRAID() {
 #    fi
 # ------------------------------------------------------
 
-function is_exists() {
+function is_exists()
+                     {
   if [[ -e "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_not_exists() {
+function is_not_exists()
+                         {
   if [[ ! -e "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_file() {
+function is_file()
+                   {
   if [[ -f "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_not_file() {
+function is_not_file()
+                       {
   if [[ ! -f "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_dir() {
+function is_dir()
+                  {
   if [[ -d "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_not_dir() {
+function is_not_dir()
+                      {
   if [[ ! -d "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_symlink() {
+function is_symlink()
+                      {
   if [[ -L "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_not_symlink() {
+function is_not_symlink()
+                          {
   if [[ ! -L "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_empty() {
+function is_empty()
+                    {
   if [[ -z "$1" ]]; then
     return 0
   fi
   return 1
 }
 
-function is_not_empty() {
+function is_not_empty()
+                        {
   if [[ -n "$1" ]]; then
     return 0
   fi
@@ -308,7 +343,8 @@ function is_not_empty() {
 # OUTS: $build_path: The constructed path
 # NOTE: Heavily inspired by: https://unix.stackexchange.com/a/40973
 # -----------------------------------
-function build_path() {
+function build_path()
+                      {
   if [[ -z ${1-} || $# -gt 2 ]]; then
     script_exit "Invalid arguments passed to build_path()!" 2
   fi
@@ -324,10 +360,10 @@ function build_path() {
   while [[ -n $temp_path ]]; do
     path_entry="${temp_path%%:*}"
     case "$new_path:" in
-    *:"$path_entry":*) ;;
-    *)
-      new_path="$new_path:$path_entry"
-      ;;
+      *:"$path_entry":*) ;;
+      *)
+        new_path="$new_path:$path_entry"
+        ;;
     esac
     temp_path="${temp_path#*:}"
   done
@@ -342,7 +378,8 @@ function build_path() {
 # ARGS: $1 (required): Name of the binary to test for existence
 #       $2 (optional): Set to any value to treat failure as a fatal error
 # -----------------------------------
-function check_binary() {
+function check_binary()
+                        {
   if [[ $# -ne 1 && $# -ne 2 ]]; then
     script_exit "Invalid arguments passed to check_binary()!" 2
   fi
@@ -365,7 +402,8 @@ function check_binary() {
 # DESC: Validate we have superuser access as root (via sudo if requested)
 # ARGS: $1 (optional): Set to any value to not attempt root access via sudo
 # -----------------------------------
-function check_superuser() {
+function check_superuser()
+                           {
   if [[ $# -gt 1 ]]; then
     script_exit "Invalid arguments passed to check_superuser()!" 2
   fi
@@ -403,7 +441,8 @@ function check_superuser() {
 # ARGS: $1 (optional): Set to zero to not attempt execution via sudo
 #       $@ (required): Passed through for execution as root user
 # -----------------------------------
-function run_as_root() {
+function run_as_root()
+                       {
   local try_sudo
   if [[ ${1-} =~ ^0$ ]]; then
     try_sudo="true"
@@ -431,30 +470,30 @@ optstring=h
 unset options
 while (($#)); do
   case $1 in
-  # If option is of type -ab
-  -[!-]?*)
-    # Loop over each character starting with the second
-    for ((i = 1; i < ${#1}; i++)); do
-      c=${1:i:1}
+    # If option is of type -ab
+    -[!-]?*)
+      # Loop over each character starting with the second
+      for ((i = 1; i < ${#1}; i++)); do
+        c=${1:i:1}
 
-      # Add current char to options
-      options+=("-$c")
+        # Add current char to options
+        options+=("-$c")
 
-      # If option takes a required argument, and it's not the last char make
-      # the rest of the string its argument
-      if [[ $optstring = *"$c:"* && ${1:i+1} ]]; then
-        options+=("${1:i+1}")
-        break
-      fi
-    done
-    ;;
+        # If option takes a required argument, and it's not the last char make
+        # the rest of the string its argument
+        if [[ $optstring = *"$c:"* && ${1:i+1} ]]; then
+          options+=("${1:i+1}")
+          break
+        fi
+      done
+      ;;
 
-  # If option is of type --foo=bar
-  --?*=*) options+=("${1%%=*}" "${1#*=}") ;;
-  # add --endopts for --
-  --) options+=(--endopts) ;;
-  # Otherwise, nothing special
-  *) options+=("$1") ;;
+    # If option is of type --foo=bar
+    --?*=*) options+=("${1%%=*}" "${1#*=}") ;;
+    # add --endopts for --
+    --) options+=(--endopts) ;;
+    # Otherwise, nothing special
+    *) options+=("$1") ;;
   esac
   shift
 done
