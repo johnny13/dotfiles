@@ -360,7 +360,7 @@ createNewShellScript()
     # strip trailing slash & check if valid
     TRIMMED=$(echo $fpath | sed 's:/*$::')
     if [[ ! -d "$TRIMMED" ]]; then
-        OUTPUT_MSG "FAIL" "ERROR! Path: ${TRIMMED} not found."
+        OUTPUT_MSG "INFO" "Path: ${TRIMMED} being created"
     fi
 
     # confirm file doesnt already exist
@@ -423,17 +423,18 @@ buildNewScript()
     CHOICE="$1"
 
     if [[ $CHOICE -eq 1 ]]; then
-        #echo " Build Simple"
-        BASEFILE="${BASEDIR}/new/SHELL/template_quick/run.sh"
-        cp "${BASEFILE}" "${NFILE}"
+        # simply copy the base template file to the desired path
+        BASEFILE=$BASEDIR/var/templates/bash-quick/run.sh
+        cp $BASEFILE $NFILE
     fi
 
     if [[ $CHOICE -eq 2 ]]; then
-        #echo " Build Complex"
-        mkdir -p "${NEWFILEPATH}/${NEWFILENAME}"
-        BASEFILE="${BASEDIR}/new/SHELL/template/run.sh"
-        cp "${BASEFILE}" "${NEWFILEPATH}/${NEWFILENAME}/${NEWFILENAME}.sh"
-        NFILE="${NEWFILEPATH}/${NEWFILENAME}/${NEWFILENAME}.sh"
+		# slightly more complex than opt 1. instead of a single file, we need a directory w/ library files + script
+        # Create a folder based on filename, copy file to new directory
+        mkdir -p $NEWFILEPATH/$NEWFILENAME
+        BASEFILE=$BASEDIR/var/templates/bash-full/run.sh
+        cp $BASEFILE $NEWFILEPATH/$NEWFILENAME/$NEWFILENAME.sh
+        NFILE=$NEWFILEPATH/$NEWFILENAME/$NEWFILENAME.sh
     fi
 
     OUTPUT_MSG "INFO" "Setting up new script...."
@@ -463,9 +464,9 @@ buildNewScript()
 
     if [[ $CHOICE -eq 2 ]]; then
         OUTPUT_MSG "INFO" "Adding additional libraries..."
-        BASED="${BASEDIR}/new/SHELL/template/docs"
-        BASEE="${BASEDIR}/new/SHELL/template/exmaples"
-        BASEL="${BASEDIR}/new/SHELL/template/library"
+        BASED="${BASEDIR}/var/templates/bash-full/docs"
+        BASEE="${BASEDIR}/var/templates/bash-full/exmaples"
+        BASEL="${BASEDIR}/var/templates/bash-full/library"
 
         cp -r "${BASED}" "${NEWFILEPATH}/${NEWFILENAME}"
         cp -r "${BASEE}" "${NEWFILEPATH}/${NEWFILENAME}"

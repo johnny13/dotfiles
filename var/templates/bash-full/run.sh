@@ -592,28 +592,18 @@ function is_not_empty()
 # SCRIPT SETUP
 ## ------------------ ---------  ------   ----    ---     --      -
 
-# Exit on error. Append '||true' if you expect an error
-set -o errexit
-
-# Trap errors in subshells and functions
-set -e
-set -o pipefail
-
 traperr()
 {
     PMSG "FAIL" "ERROR: ${BASH_SOURCE[1]} at about ${BASH_LINENO[0]}"
 }
 
-set -o errtrace
-trap traperr ERR
-
 # Set IFS to preferred implementation
 IFS=$' \n\t'
 
-_setColors_
-_setMessages_
-
-# Disallow expansion of unset variables
+set -e
+set -o pipefail
+set -o errtrace
+trap traperr ERR
 set -o nounset
 
 # Force arguments when invoking the script
@@ -622,7 +612,8 @@ set -o nounset
 # Create a temp directory '$TMP_DIR'
 # _makeTempDir_ "$(basename "$0")"
 
-# SAMPLE
+_setColors_
+_setMessages_
 _scriptHeader_
 echo ""
 usage

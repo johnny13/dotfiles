@@ -10,3 +10,4 @@ vault/*.sh
 
 workspace.code-workspace
 *.code-workspace
+bin/isortr.sh
