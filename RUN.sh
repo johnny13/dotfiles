@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-#/ -----------------------------------------
-#/ | [R]ESEARCH [C]HEMICALS - cli on drugs |
-#/ -----------------------------------------
+#/ ---------------------------------------------------------------
+#/  || [R]ESEARCH [C]HEMICALS - injectable shell augmentations ||
+#/ ---------------------------------------------------------------
 #/
-#/ Usage: ./menu.sh
+#/ Usage: ./RUN.sh
 #/
 #/ Select option from menu:
 #/
@@ -16,7 +16,7 @@
 #/		Run w/ no params for detailed breakdown of each option.
 #/
 #/ ------------------ ---------  ------   ----    ---     --      -
-#| Version 0.0.1w
+#| Version 0.1.1
 
 ##
 ## Libraries & Globals
@@ -195,8 +195,9 @@ echoChoiceSelect()
             ;;
         q)
             clear
-            #/bin/bash ./media/ascii/see_you.sh
-            figlet -f gangshit2 -w 150 -ksS "Later" | lolcat -a -d 2 -s 60
+            cd "${BASEDIR}"
+            ./var/ascii/see_you.sh
+            # 
             sleep 1s # Waits 5 seconds.
             clear
             safeExit

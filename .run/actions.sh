@@ -253,7 +253,7 @@ gitCommit()
 ## --------------------------------------------
 dotfileCOPY()
 {
-    cd "${BASEDIR}"
+    cd "${BASEDIR}" || exit
     find . -name ".DS_Store" -delete
 
     # COPY Default Dots to Home
@@ -344,30 +344,38 @@ createNewShellScript()
     # Prompt for Name
     ansi::bold
     ansi::color 11
-    echo -e "\n     Creating New Shell Script\n\n"
-    message="     what to use for filename? :  "
+
+    cd "${BASEDIR}" || exit
+    cat ./var/ascii/newshellscript.txt
+    echo -e "\n\n"
+
+    #echo -e "\n     Creating New Shell Script\n\n"
+    message="     what to use for filename? (no extension) :  "
     read -rp "$message" NEWFILENAME
 
-    fname="${NEWFILENAME}.sh"
+    # We cant know the extension until AFTER they set what type of script
+    #fname="${NEWFILENAME}.sh"
 
     echo ""
 
     message="     where to create file? [ex: /my/saved/path] :  "
     read -rp "$message" NEWFILEPATH
 
-    fpath="${NEWFILEPATH}"
-
     # strip trailing slash & check if valid
-    TRIMMED=$(echo $fpath | sed 's:/*$::')
+    TRIMMED=$(echo $NEWFILEPATH | sed 's:/*$::')
     if [[ ! -d "$TRIMMED" ]]; then
         OUTPUT_MSG "INFO" "Path: ${TRIMMED} being created"
+        mkdir -p "${TRIMMED}"
+
+        if [[ ! -d "$TRIMMED" ]]; then
+            OUTPUT_MSG "FAIL" "Directory Wasnt created for some reason! Exiting for safety!"
+        fi
+
+    else
+        OUTPUT_MSG "FAIL" "Directory already exists! Exiting for safety!"
     fi
 
-    # confirm file doesnt already exist
-    NFILE="${TRIMMED}/${fname}"
-    if is_file "${NFILE}"; then
-        OUTPUT_MSG "FAIL" "File already exists! Exiting... :("
-    fi
+    echo ""
 
     message="     Brief description of ${NEWFILENAME}:  "
     read -rp "$message" NEWdetails
@@ -410,7 +418,7 @@ createNewShellScript()
             buildNewNode
             ;;
         *)
-            echo -e "     ${BRED}     Bad choice!!!${NORMAL}\n\n" && exit
+            OUTPUT_MSG "FAIL" "Bad choice!!!! Exiting for safety!"
             ;;
     esac
     echo ""
@@ -420,27 +428,32 @@ createNewShellScript()
 
 buildNewScript()
 {
-    CHOICE="$1"
+
+    ## Note: $TRIMMED has been created already by this point.
+    ##       That is where the file(s) should end up.
+
+    CHOICE=$1
 
     if [[ $CHOICE -eq 1 ]]; then
-        # simply copy the base template file to the desired path
-        BASEFILE=$BASEDIR/var/templates/bash-quick/run.sh
-        cp $BASEFILE $NFILE
+        BASEFILE="${BASEDIR}/var/templates/bash-quick/run.sh"
     fi
 
     if [[ $CHOICE -eq 2 ]]; then
-		# slightly more complex than opt 1. instead of a single file, we need a directory w/ library files + script
-        # Create a folder based on filename, copy file to new directory
-        mkdir -p $NEWFILEPATH/$NEWFILENAME
-        BASEFILE=$BASEDIR/var/templates/bash-full/run.sh
-        cp $BASEFILE $NEWFILEPATH/$NEWFILENAME/$NEWFILENAME.sh
-        NFILE=$NEWFILEPATH/$NEWFILENAME/$NEWFILENAME.sh
+        BASEFILE="${BASEDIR}/var/templates/bash-full/_base.sh"
+    fi
+
+    ## SHELL SCRIPT OPTION
+    if [[ $CHOICE -eq 1 ]] || [[ $CHOICE -eq 2 ]]; then
+        NFILE="${TRIMMED}/${NEWFILENAME}.sh"
+        NNAME="${NEWFILENAME}.sh"
+        cp "${BASEFILE}" "${NFILE}"
+        OUTPUT_MSG "INFO" "Copying: ${BASEFILE} to ${NFILE}"
     fi
 
     OUTPUT_MSG "INFO" "Setting up new script...."
 
     search="xSCRIPTNAMEx"
-    replace="${fname}"
+    replace="${NNAME}"
     sed -i "s|$search|$replace|g" "${NFILE}"
 
     search='xSCRIPTDETAILSx'
@@ -464,16 +477,13 @@ buildNewScript()
 
     if [[ $CHOICE -eq 2 ]]; then
         OUTPUT_MSG "INFO" "Adding additional libraries..."
-        BASED="${BASEDIR}/var/templates/bash-full/docs"
-        BASEE="${BASEDIR}/var/templates/bash-full/exmaples"
-        BASEL="${BASEDIR}/var/templates/bash-full/library"
+        BASED="${BASEDIR}"/var/templates/bash-full
 
-        cp -r "${BASED}" "${NEWFILEPATH}/${NEWFILENAME}"
-        cp -r "${BASEE}" "${NEWFILEPATH}/${NEWFILENAME}"
-        cp -r "${BASEL}" "${NEWFILEPATH}/${NEWFILENAME}"
+        cp -r "${BASED}"/* "${TRIMMED}"/
+        rm "${TRIMMED}/_base.sh"
     fi
 
-    OUTPUT_MSG "GOOD" "  Final Output Available Here: ${NFILE}"
+    OUTPUT_MSG "GOOD" "Final Output Available Here: ${NFILE}"
 
     echo ""
 }
