@@ -7,9 +7,9 @@ apt_or_brew_helperInstaller()
     BREW_CMD=$(command -v brew)
 
     if [[ ! -z $APT_GET_CMD ]]; then
-        apt-get install -y "${PACKAGE_NAME}"
-    elif [[ ! -z $OTHER_CMD ]]; then
-        $BREW_CMD install "${PACKAGE_NAME}"
+        apt install -y "${PACKAGE_NAME}"
+    elif [[ ! -z $BREW_CMD ]]; then
+        brew install "${PACKAGE_NAME}"
     else
         echo "error can't install package ${PACKAGE_NAME}"
         exit 1
