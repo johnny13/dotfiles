@@ -2,4 +2,5 @@
 dotfiles/fortune/.npmrc
 .DS_Store
 */.DS_Store
-dotfiles/*
+
+# dotfiles/*

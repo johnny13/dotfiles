@@ -1,0 +1,15 @@
+alias ls='exa -lbhm --no-permissions --git --modified --color-scale --icons --group-directories-first'
+alias lsown='exa -lbhma --icons --color-scale --group-directories-first --sort=modified'
+alias lsmodtree='exa --sort=modified -T -L 2 --group-directories-first'
+alias lsg='exa --color-scale -g'
+alias ll='/bin/ls --color=auto -alF'
+
+alias lphp='/usr/local/bin/php'
+
+alias reload='source ~/.zshrc && echo -e "\n\tRELOAD ZSHRC!!\n"'
+
+alias bud='./node_modules/.bin/bud'
+
+alias ipaddy="ipconfig getifaddr $(networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/{getline; print $2}')"
+
+alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'

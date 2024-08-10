@@ -1,0 +1,32 @@
+[branch]
+	autoSetupRebase = always
+[color]
+	ui = auto
+[core]
+	autocrlf = input
+[credential]
+	helper = osxkeychain
+	useHttpPath = false
+[merge]
+	ff = false
+[pull]
+	rebase = true
+[push]
+	default = simple
+[rebase]
+	autostash = true
+[rerere]
+	autoUpdate = true
+	enabled = true
+[remote "origin"]
+	prune = true
+[user]
+	name = Derek
+	email = derek@huement.com
+[alias]
+	ll = log --graph --format=\"%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)\"
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
