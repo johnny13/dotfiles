@@ -251,7 +251,7 @@ echoMainMenuDisplay()
 
     ## Finish Main Menu
     ## -------------------------
-    ansi::down 6
+    ansi::down 10
 
     echoChoiceSelect
 
