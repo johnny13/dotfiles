@@ -4,10 +4,11 @@
 
 gitAutoCommit()
 {
-	git add --all                         &> /dev/null
-	now=$(date)                           &> /dev/null
-	git commit -m "Auto-Commit at : $now" &> /dev/null	
-	git push -u origin main               &> /dev/null
+	git add --all                         
+	now=$(date)                           
+	git commit -m "Auto-Commit at : $now"
+	git push -u origin main
+	git status
 }
 
 
