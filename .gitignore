@@ -4,3 +4,5 @@ dotfiles/fortune/.npmrc
 */.DS_Store
 
 # dotfiles/*
+
+.run/actions.sh
