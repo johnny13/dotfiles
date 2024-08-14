@@ -2,6 +2,15 @@
 ### Actions File Sourced in via menu.sh
 ### -----------------------------------
 
+gitAutoCommit()
+{
+	git add --all                         &> /dev/null
+	now=$(date)                           &> /dev/null
+	git commit -m "Auto-Commit at : $now" &> /dev/null	
+	git push -u origin main               &> /dev/null
+}
+
+
 testFunction()
 {
   # local binDir

@@ -127,9 +127,9 @@ echoChoiceSelect()
     echo -e "\tENTER CHOICE TO CONTINUE [?]"
     read -n 1 -s option </dev/tty
     case "$option" in
-        g)
+        1)
             echoMiniHeader
-            gitCommit
+            gitAutoCommit
             pause
             echoMainMenuDisplay
             ;;
@@ -150,21 +150,21 @@ echoChoiceSelect()
         l)
             echoMiniHeader
             # list stowed files
-						${BASEDIR}/stowCMD.sh --list
+			${BASEDIR}/stowCMD.sh --list
             pause
             echoMainMenuDisplay
             ;;
         s)
             echoMiniHeader
             # stow command
-						${BASEDIR}/stowCMD.sh
+			${BASEDIR}/stowCMD.sh
             pause
             echoMainMenuDisplay
             ;;
         t)
             echoMiniHeader
             # setup / testFunction
-						${BASEDIR}/stowCMD.sh --setup
+			${BASEDIR}/stowCMD.sh --setup
             pause
             echoMainMenuDisplay
             ;;
@@ -267,7 +267,7 @@ echoMainMenuDisplay()
 ## -------------------------
 declare -a coreItem=("[t] setup / test" "[s] run gnu stow" "[l] list stowd files")
 declare -a cliItem=("[x] cheat sheet" "[ ] todo")
-declare -a initItem=("[1] git pull" "[2] git push" "[3] git stats")
+declare -a initItem=("[1] gitAutoCommit")
 
 ##
 ## Start Script / Main Menu
