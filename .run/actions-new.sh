@@ -6,7 +6,7 @@ gitAutoCommit()
 {
 	git add --all                         
 	now=$(date)                           
-	git commit -m "Auto-Commit at : $now"
+	git commit -m "feat: auto-commit at : $now"
 	git push -u origin main
 	git status
 }
