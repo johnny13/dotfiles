@@ -34,12 +34,12 @@ source ./.run/actions-new.sh
 #. "./.run/libui.sh"
 
 # [R]un [A]s [R]oot?
-RAR="false"
+# RAR="false"
 
 ## GLOBAL VARIABLES (Shouldnt need to change these)
 scriptPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 scriptFILENAME=$(basename "$0")
-scriptFULLNAME="${scriptPATH}/${scriptFILENAME}"
+# scriptFULLNAME="${scriptPATH}/${scriptFILENAME}"
 
 ## READS FROM THE COMMENTS AT THE TOP OF THE FILE
 usage()
@@ -56,14 +56,6 @@ version()
         die "Failed to display version information"
     echo ""
     exit 0
-}
-
-## Ascii Banner. Change as desired.
-menuheader()
-{
-    #x HEADERCODE
-    # shellcheck disable=SC2317
-    echo "${scriptFILENAME}"
 }
 
 # Exit Script
@@ -112,7 +104,7 @@ echoMenuItem()
 echoMenuRow()
 {
     echo ""
-    ansi::forward $2
+    ansi::forward "$2"
     ansi::color 11
     echo -e "$1"
     ansi::resetForeground
@@ -125,11 +117,11 @@ echoChoiceSelect()
     ansi::bold
     ansi::color 11
     echo -e "\tENTER CHOICE TO CONTINUE [?]"
-    read -n 1 -s option </dev/tty
+    read -r -n 1 -s option </dev/tty
     case "$option" in
         1)
             echoMiniHeader
-			cleanFiles $scriptPATH
+			cleanFiles "$scriptPATH"
             gitAutoCommit
             pause
             echoMainMenuDisplay
@@ -159,14 +151,14 @@ echoChoiceSelect()
         s)
             echoMiniHeader
             # stow command
-			/usr/local/bin/bash ${BASEDIR}/dotfiles/STOW.sh
+			/usr/local/bin/bash "${BASEDIR}"/dotfiles/STOW.sh
             pause
             echoMainMenuDisplay
             ;;
         t)
             echoMiniHeader
             # setup / testFunction
-			${BASEDIR}/stowCMD.sh --setup
+			"${BASEDIR}"/stowCMD.sh --setup
             pause
             echoMainMenuDisplay
             ;;
