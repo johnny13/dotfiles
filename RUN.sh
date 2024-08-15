@@ -129,6 +129,7 @@ echoChoiceSelect()
     case "$option" in
         1)
             echoMiniHeader
+			cleanFiles $scriptPATH
             gitAutoCommit
             pause
             echoMainMenuDisplay
@@ -141,8 +142,8 @@ echoChoiceSelect()
             ;;
         k)
             echoMiniHeader
-						echo "TODO: ADD Functions"
-						echo "todo: pixel art tools"
+            echo "TODO: ADD Functions"
+            echo "todo: pixel art tools"
             echo "delta diff fuzzy-sys kanban board"
             pause
             echoMainMenuDisplay
@@ -179,7 +180,7 @@ echoChoiceSelect()
             ;;
         q)
             clear
-						# uncomment for cool exits
+            # uncomment for cool exits
             # ${BASEDIR}/rice/ascii-art/see_you.sh
             # sleep 1 # Waits 5 seconds.
             # clear

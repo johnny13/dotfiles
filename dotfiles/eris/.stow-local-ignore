@@ -28,5 +28,5 @@ _darcs
 stowCMD.sh
 stowCMD1.sh
 ^/stowCMD*.*
-^/stowCMD**
+^/stowCMD*
 ^/config

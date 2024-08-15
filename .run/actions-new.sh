@@ -11,6 +11,13 @@ gitAutoCommit()
 	git status
 }
 
+cleanFiles()
+{
+	echo -e "\tCLEANING| ${1}"
+	cd $1
+	find . -name ".DS_Store" -delete
+}
+
 
 testFunction()
 {
