@@ -151,14 +151,15 @@ echoChoiceSelect()
         l)
             echoMiniHeader
             # list stowed files
-			${BASEDIR}/stowCMD.sh --list
+			echo "TODO: list stowed files"
+			# ${BASEDIR}/stowCMD.sh --list
             pause
             echoMainMenuDisplay
             ;;
         s)
             echoMiniHeader
             # stow command
-			${BASEDIR}/stowCMD.sh
+			/usr/local/bin/bash ${BASEDIR}/dotfiles/STOW.sh
             pause
             echoMainMenuDisplay
             ;;

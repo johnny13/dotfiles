@@ -28,9 +28,9 @@ USERFILE="config-${USER}.sh"
 echo "${USER} | Running Dotfiles Stow Command"
 
 # Get configFile[Username]
-if test -f ./${USERFILE}; then
-	echo "${USER} | Loading Config File ./${USERFILE}"
-	source "./${USERFILE}"
+if test -f ${scriptPATH}/${USERFILE}; then
+	echo "${USER} | Loading Config File ${scriptPATH}/${USERFILE}"
+	source ${scriptPATH}/${USERFILE}
 fi
 
 if [[ -z $StowTargets ]]; then
@@ -59,11 +59,10 @@ else
 	
 	for key in ${!arr[@]}; do
 		cd "${dirs[${key}]}"
-		pwd
 		find . -name ".DS_Store" -delete
 		
 		if [ -z ${DRYMODE+x} ]; then
-			echo "#${counter} | ${scriptPATH}/${key}"
+			echo "STOW #${counter} | ${scriptPATH}/${key}"
 			stow --target="${arr[${key}]}" ${key}
 		else
 			echo "DRY #${counter}| stow --target=${arr[${key}]} ${key}"

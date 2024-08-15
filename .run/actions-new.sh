@@ -18,6 +18,12 @@ cleanFiles()
 	find . -name ".DS_Store" -delete
 }
 
+runStowCommand()
+{
+	echo -e "\tCLEANING| ${1}"
+	cd $1
+	find . -name ".DS_Store" -delete
+}
 
 testFunction()
 {
