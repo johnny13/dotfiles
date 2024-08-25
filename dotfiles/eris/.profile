@@ -13,3 +13,5 @@ then
     done
   fi
 fi
+export NVS_HOME="$HOME/.nvs"
+[ -s "/usr/local/Caskroom/nvs/1.7.1/nvs-1.7.1/nvs.sh" ] && . "/usr/local/Caskroom/nvs/1.7.1/nvs-1.7.1/nvs.sh"

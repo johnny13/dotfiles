@@ -215,7 +215,7 @@ echoMainMenuDisplay()
     ## Main Menu Categories
     ## -------------------------
     echo ""
-    echoMenuRow "▰▱❪❮ TADOT CMD ❯❫▰▱▱▰" 8
+    echoMenuRow "▰▱❪❮ COMMANDS ❯❫▰▱▱▰" 8
     echo ""
 
     for i in "${coreItem[@]}"; do
@@ -225,7 +225,7 @@ echoMainMenuDisplay()
 
     ansi::up 9
 
-    echoMenuRow "▰▱❪❮ +CLI CMDS ❯❫▰▱▱▰" 36
+    echoMenuRow "▰▱❪❮ INFORMATION ❯❫▰▱▱▰" 36
     echo ""
 
     for i in "${cliItem[@]}"; do
@@ -235,7 +235,7 @@ echoMainMenuDisplay()
 
     ansi::down 2
 
-    echoMenuRow "▰▱❪❮ REPO CMDS ❯❫▰▱▱▰" 8
+    echoMenuRow "▰▱❪❮ REPOSITORY ❯❫▰▱▱▰" 8
     echo ""
 
     for i in "${initItem[@]}"; do
