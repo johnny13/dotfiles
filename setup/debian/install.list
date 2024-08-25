@@ -1,0 +1,12 @@
+bc
+cryptsetup
+curl
+debootstrap
+dosfstools
+findutils
+fzf
+gdisk
+grep
+lvm2
+parted
+sed

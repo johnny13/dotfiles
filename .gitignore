@@ -6,3 +6,5 @@ dotfiles/fortune/.npmrc
 # dotfiles/*
 
 .run/actions.sh
+
+dotfiles-old/*

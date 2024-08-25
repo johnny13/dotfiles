@@ -4,7 +4,7 @@
 #/ Options are sent via config file
 #/ One feature of this file is it will automatically clear out any problem files, like ".DS_Store" files on MacOS
 #/ It also allows for a list of key value pairs to control what directories are stowed, allowing for better control over gnuSTOW
-#/ without having to remember all the commands and what directory those commands must be ran from. 
+#/ without having to remember all the commands and what directory those commands must be ran from.
 
 #/ Usage is very simple. Make sure your config values are set for your username. ie 'config-${user}.sh'
 #/ $ ./STOW.sh
@@ -16,6 +16,7 @@
 scriptPATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 scriptFILENAME=$(basename "$0")
 scriptFULLNAME="${scriptPATH}/${scriptFILENAME}"
+
 # SETTINGS
 set -o nounset
 set -o errexit
@@ -28,9 +29,9 @@ USERFILE="config-${USER}.sh"
 echo "${USER} | Running Dotfiles Stow Command"
 
 # Get configFile[Username]
-if test -f ${scriptPATH}/${USERFILE}; then
+if test -f "${scriptPATH}/${USERFILE}"; then
 	echo "${USER} | Loading Config File ${scriptPATH}/${USERFILE}"
-	source ${scriptPATH}/${USERFILE}
+	source "${scriptPATH}/${USERFILE}"
 fi
 
 if [[ -z $StowTargets ]]; then
@@ -38,40 +39,38 @@ if [[ -z $StowTargets ]]; then
 	exit 1
 else
 	echo "${USER} | Stowing ${#StowTargets[@]} Packages"
-	
+
 	cd "${scriptPATH}"
 	find . -name ".DS_Store" -delete
-	
+
 	counter=1
-#   for i in "${StowTargets[@]}"
-# 	do
-# 	   echo "${USER} | #${counter}. Stow Target: $i"
-#
-# 	   if [[ -z $DRYMODE ]]; then
-# 		   echo 'DO IT FOR REAL'
-# 	   else
-# 		   # change to the array item's directory
-# 		   echo "DRY| cd ${scriptPATH}"
-# 		   echo 'DRY stow --target=/Users/eris eris'
-# 	   fi
-# 	done
-	
-	
+	#   for i in "${StowTargets[@]}"
+	# 	do
+	# 	   echo "${USER} | #${counter}. Stow Target: $i"
+	#
+	# 	   if [[ -z $DRYMODE ]]; then
+	# 		   echo 'DO IT FOR REAL'
+	# 	   else
+	# 		   # change to the array item's directory
+	# 		   echo "DRY| cd ${scriptPATH}"
+	# 		   echo 'DRY stow --target=/Users/eris eris'
+	# 	   fi
+	# 	done
+
 	for key in ${!arr[@]}; do
 		cd "${dirs[${key}]}"
 		find . -name ".DS_Store" -delete
-		
+
 		if [ -z ${DRYMODE+x} ]; then
 			echo "STOW #${counter} | ${scriptPATH}/${key}"
-			stow --target="${arr[${key}]}" ${key}
+			stow --target="${arr[${key}]}" "${key}"
 		else
 			echo "DRY #${counter}| stow --target=${arr[${key}]} ${key}"
 		fi
-		
+
 		((counter++))
 	done
 fi
-
 
 ## read target directory in variable
 
@@ -85,10 +84,9 @@ fi
 
 ## CLEANUP
 if [ -d /Users/eris/config ]; then
-  echo "Stow incorrectly created [/Users/eris/config]. Removing..."
-  rm -rf /Users/eris/config
+	echo "Stow incorrectly created [/Users/eris/config]. Removing..."
+	rm -rf /Users/eris/config
 fi
-
 
 echo ""
 echo "All Done!"

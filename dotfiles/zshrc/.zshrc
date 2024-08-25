@@ -102,7 +102,7 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-# <script></script> 
+# <script></script>
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -129,22 +129,21 @@ export NVM_DIR="$HOME/.nvm"
 #export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
 
 # DOTFILE MANAGER
-export DFPATH=/Users/fortune/dotfiles/local/fortune
+export DFPATH=/Users/fortune/Developer/tadot
+PATH="$DFPATH/scripts/bash:$DFPATH/scripts/macos:$PATH"
 
 # PATH MODS
 PATH="$HOME/.local/rc/bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-PATH="$HOME/dotfiles/bin:$PATH"
 PATH="$HOME/.composer/vendor/bin:$PATH"
 
-## Manually Added 
-source /Users/fortune/dotfiles/local/fortune/env.sh
-source /Users/fortune/dotfiles/local/fortune/scripts/zsh-z.plugin.zsh
+## Manually Added
+source "$HOME/zsh-z.plugin.zsh"
 export EDITOR="/usr/local/bin/mate -w"
 
 ## ALIASES
-export aliaspath="$DFPATH/link/alias"
-source "$DFPATH/link/alias"
+export aliaspath="$HOME/.alias"
+source "$HOME/.alias"
 
 ## BREW CONFIG
 export HOMEBREW_NO_ENV_HINTS=true
