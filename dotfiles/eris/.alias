@@ -13,6 +13,7 @@ alias lcdstats='nohup ./STARTUP.sh > /dev/null 2>&1 &'
 alias dsclean='find . -name ".DS_Store" -print -delete'
 
 # SSH CONNECTIONS
-alias s-omv="ssh 'huement@openmediavault.local'"
-alias s-swiz="ssh -v 'derek@swiz.local'"
-alias s-fortune="ssh 'fortune@fortune.local'"
+alias s-omv="ssh huement@openmediavault.local"
+alias s-swiz="ssh derek@10.20.30.207"
+alias s-fortune="ssh fortune@fortune.local"
+alias s-ddwrt="ssh root@10.20.30.1"

@@ -14,7 +14,7 @@ eval $(ssh-agent)
 
 source "/Users/eris/.alias"
 
-source "/Users/eris/zsh-z.plugin.zsh"
+source "/Users/eris/.zsh-z.plugin.zsh"
 
 source <(fzf --zsh)
 

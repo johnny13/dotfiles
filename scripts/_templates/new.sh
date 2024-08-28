@@ -26,6 +26,7 @@ function banner
 {
     # Run this to generate the banner
     # figlet -f Rounded " E][AMPLE " | lolcat -f &> ban.txt
+    # figlet -f rustofat " flacfixr " | lolcat -f &> ban.txt
     #
     # Then run this to create the final header
     # cat ban.txt divider.txt > header.txt
