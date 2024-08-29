@@ -21,11 +21,12 @@
 
 ```
 
-This repo \*attempts\* to handle all my dotfiles across my different machines. It relies on GNU Stow to symlink everything from the `dotfiles/$user` directory.
+This repo \*attempts\* to handle all my dotfiles across my different machines. It relies on GNU Stow to symlink everything from the `dotfiles/$user` directory to the standard `$HOME` folder. 
 
-If there are files that are common across machines, they can be put in the `dotfiles/` directory and be simlinked from there. 
+BUT WAIT! THERES MORE! This repo slices, it dices, and it rices your desktop. If thats not enough, there are plenty of shell scripts (sorted via OS and/or interpreter), and then, last but not least, are the dev box setup scripts that take a clean install MacOS or Debian install, and make it a worthwhile development machine. 
 
-## SECTIONS❯❯ ❯  ❯
+
+# SECTIONS
 
 ```sh
     ◼ dotfiles ❱ config files used across all machines
@@ -34,7 +35,13 @@ If there are files that are common across machines, they can be put in the `dotf
     ◼ setup    ❱ quickly build out a dev box
 ```
 
-------------------------
+Most of the directories are very straightforward and require little in the way of explination. The one thing that isnt 100% obvious is the awesome **command line interface** that powers this repo. 
+
+### CLI SCRIPT
+
+Simply run script like so: `$ ./RUN.sh` from your favorite terminal and you'll be greated with the main menu...
+
+![Alt text](.run/demo.png?raw=true "CLI Example")
 
 ### • dotfiles
 
@@ -59,6 +66,6 @@ This section contains all the default scripts and code bits that you want on all
 
 ------------------------
 
-## CHANGELOG
+## CHANGELOG ❯❯ ❯  ❯
 
 + Aug 14 2024 | added the Eris machines's dotfiles
