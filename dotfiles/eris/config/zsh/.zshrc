@@ -19,3 +19,5 @@ source "/Users/eris/.zsh-z.plugin.zsh"
 source <(fzf --zsh)
 
 PATH="/Users/eris/.cargo/bin:$PATH"
+
+export OCI_CLI_USER="ocid1.user.oc1..aaaaaaaa6sa4fjz7jg256y5v6eohch4ti3ssq4vrngud4hfidachxtijfwqa"

@@ -814,6 +814,10 @@ _mainAction_() {
   PMSG "GOOD" "Script Finished!"
 }
 
+die() {
+_safeExit_
+}
+
 _parseOptions_() {
 
 	if [ "$RAR" != "false" ]; then
