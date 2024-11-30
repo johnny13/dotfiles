@@ -12,9 +12,12 @@ alias lcdstats='nohup ./STARTUP.sh > /dev/null 2>&1 &'
 
 alias dsclean='find . -name ".DS_Store" -print -delete'
 
+alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+
 # SSH CONNECTIONS
 alias s-omv="ssh huement@openmediavault.local"
 alias s-swiz="ssh derek@10.20.30.207"
 alias s-fortune="ssh fortune@fortune.local"
 alias s-ddwrt="ssh root@10.20.30.1"
 alias s-debdock="ssh derek@debdock.local"
+alias s-oracle="ssh -i ~/.ssh/id_oracle opc@164.152.26.155"

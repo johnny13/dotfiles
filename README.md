@@ -28,7 +28,7 @@ Simply run script like so: `$ ./RUN.sh` from your favorite terminal and you'll b
 
 ![Alt text](.run/demo.png?raw=true "CLI Example")
 
-### • dotfiles
+## • dotfiles •
 
 This section contains all the default scripts and code bits that you want on all your machines.
 
@@ -37,6 +37,14 @@ This section contains all the default scripts and code bits that you want on all
     ◼ fortune ❱
     ◼ zshrc   ❱
 ```
+
+There are two ways of setting up a machine. Either they have **ONE** Root package, that contains files and/or folders, and all that is **stowed** under their $HOME, or they have **MULTIPLE** folders that all get **stowed** to their $HOME.
+
+`eris` uses **one** root folder.
+
+`fortune` uses **multiple** folders (fortune & zshrc).
+
+Either way is acceptable. Whatever you choose, you must make a `config-$user.sh` file that contains whatever format you decide on. 
 
 ------------------------
 

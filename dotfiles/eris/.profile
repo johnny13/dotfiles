@@ -1,5 +1,7 @@
 # . "/Users/eris/.local/share/dorothy/init.sh" # Dorothy
 
+# echo 'PROFILE'
+
 if type brew &>/dev/null
 then
   HOMEBREW_PREFIX="$(brew --prefix)"
@@ -13,5 +15,10 @@ then
     done
   fi
 fi
-export NVS_HOME="$HOME/.nvs"
-[ -s "/usr/local/Caskroom/nvs/1.7.1/nvs-1.7.1/nvs.sh" ] && . "/usr/local/Caskroom/nvs/1.7.1/nvs-1.7.1/nvs.sh"
+
+#export NVS_HOME="$HOME/.nvs"
+#[ -s "/usr/local/Caskroom/nvs/1.7.1/nvs-1.7.1/nvs.sh" ] && . "/usr/local/Caskroom/nvs/1.7.1/nvs-1.7.1/nvs.sh"
+
+# export NVM_DIR="$HOME/.nvm"
+#  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+#  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
