@@ -4,8 +4,9 @@
 
 StowConfig=true
 StowTargets=(
-  "fortune"
-  "zshrc"
+	"fortune"
+	"fortune/config"
+	"zshrc"
 )
 
 # Key Value Pair Option
@@ -13,7 +14,9 @@ declare -A arr
 declare -A dirs
 
 arr["fortune"]=/Users/fortune
+arr["config"]=/Users/fortune/.config
 arr["zshrc"]=/Users/fortune
 
 dirs["fortune"]=/Users/fortune/Developer/tadot/dotfiles
+dirs["config"]=/Users/fortune/Developer/tadot/dotfiles/fortune
 dirs["zshrc"]=/Users/fortune/Developer/tadot/dotfiles

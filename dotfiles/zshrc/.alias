@@ -14,10 +14,12 @@ alias ipaddy="ipconfig getifaddr $(networksetup -listallhardwareports | awk '/Ha
 
 alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
 
+alias imgurUpload='/Users/fortune/Developer/tadot/scripts/imgur/imgurbash2'
+
 # SSH CONNECTIONS
 alias s-omv="ssh huement@openmediavault.local"
 alias s-swiz="ssh derek@10.20.30.207"
 alias s-fortune="ssh fortune@fortune.local"
 alias s-ddwrt="ssh root@10.20.30.1"
 alias s-eris="ssh eris@eris.local"
-alias s-dockdeb="ssh derek@dockerdeb.local"
+alias s-debdock="ssh derek@debdock.local"

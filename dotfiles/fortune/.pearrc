@@ -1,2 +1,2 @@
 #PEAR_Config 0.9
-a:5:{s:10:"__channels";a:2:{s:12:"pecl.php.net";a:0:{}s:5:"__uri";a:0:{}}s:8:"temp_dir";s:37:"/Users/fortune/.phpbrew/tmp/pear/temp";s:9:"cache_dir";s:42:"/Users/fortune/.phpbrew/tmp/pear/cache_dir";s:12:"download_dir";s:45:"/Users/fortune/.phpbrew/tmp/pear/download_dir";s:13:"auto_discover";i:1;}
+a:5:{s:10:"__channels";a:3:{s:12:"pecl.php.net";a:0:{}s:5:"__uri";a:0:{}s:11:"doc.php.net";a:0:{}}s:8:"temp_dir";s:37:"/Users/fortune/.phpbrew/tmp/pear/temp";s:9:"cache_dir";s:42:"/Users/fortune/.phpbrew/tmp/pear/cache_dir";s:12:"download_dir";s:45:"/Users/fortune/.phpbrew/tmp/pear/download_dir";s:13:"auto_discover";i:1;}

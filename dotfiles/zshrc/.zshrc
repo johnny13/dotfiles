@@ -181,3 +181,5 @@ export PATH="/usr/local/opt/libxml2/bin:$PATH"
 ## Mega.nz Command
 export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
 source /Applications/MEGAcmd.app/Contents/MacOS/megacmd_completion.sh
+
+export IMGUR_CLIENT_ID="70c664b4a78f42f"
