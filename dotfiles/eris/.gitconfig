@@ -1,5 +1,5 @@
 [user]
-	email = derek@huement.com
+	email = 598517+johnny13@users.noreply.github.com
 	name = Derek
 [credential]
 	helper = 
@@ -11,3 +11,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[init]
+	templatedir = /Users/eris/.git-templates

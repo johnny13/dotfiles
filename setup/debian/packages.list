@@ -33,7 +33,6 @@ hugo
 intltool
 ipython3
 jq
-julia
 jupyter
 kotlin
 libarmadillo-dev
