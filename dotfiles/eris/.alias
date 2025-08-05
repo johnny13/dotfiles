@@ -12,7 +12,17 @@ alias lcdstats='nohup ./STARTUP.sh > /dev/null 2>&1 &'
 
 alias dsclean='find . -name ".DS_Store" -print -delete'
 
-alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+# alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+alias sail='vendor/bin/sail'
+
+# Make switching versions easy
+function phpv() {
+    brew unlink php
+    brew link --overwrite --force "php@$1"
+    php -v
+}
+
+alias imgurUpload='/Users/eris/Dotfiles/scripts/imgur/imgurbash2'
 
 # SSH CONNECTIONS
 alias s-omv="ssh huement@openmediavault.local"
@@ -21,3 +31,20 @@ alias s-fortune="ssh fortune@fortune.local"
 alias s-ddwrt="ssh root@10.20.30.1"
 alias s-debdock="ssh derek@debdock.local"
 alias s-oracle="ssh -i ~/.ssh/id_oracle opc@164.152.26.155"
+alias s-debian="ssh thirteen@debian.local"
+alias s-cube="ssh root@cube.local"
+
+# Digital Ocean
+alias s-dodb="ssh -i ~/.ssh/id_rsa root@164.90.146.40"
+alias s-doweb="ssh -i ~/.ssh/id_rsa root@138.68.11.150"
+alias s-domouse="ssh -i ~/.ssh/id_rsa forge@192.241.146.189"
+
+# Editing Files
+alias e-nginx-default="micro /usr/local/etc/nginx/sites-enabled/default.conf"
+alias e-zsh="micro ~/.config/zsh/.zshrc"
+alias e-alias="micro ~/.alias"
+
+# temp
+#alias python=/usr/bin/python3
+
+alias myscripts="cd ~/Dotfiles/scripts/macos"

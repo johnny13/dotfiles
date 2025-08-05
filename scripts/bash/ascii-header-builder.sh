@@ -29,6 +29,7 @@ BPUR="\e[1;35m" # Purple
 BCYN="\e[1;36m" # Cyan
 BWHT="\e[1;37m" # White
 
+NORMAL="\e[0m"  # Text Reset
 PRIMARY=$BGRN
 ACCENT=$BCYN
 SECONDARY=$BPUR

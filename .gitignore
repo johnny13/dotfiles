@@ -8,3 +8,5 @@ dotfiles/fortune/.npmrc
 .run/actions.sh
 
 dotfiles-old/*
+dotfiles/eris/.alias
+/scripts/macos/latest

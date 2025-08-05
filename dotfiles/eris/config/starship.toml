@@ -137,7 +137,12 @@ format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 [python]
 symbol = ""
 style = "bg:color_blue"
-format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+format = '[[ $virtualenv $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+#format = 'via [[$symbol${pyenv_prefix}( $version) ](\($virtualenv\))]($style)'  # Customize prompt format
+python_binary = "python3"
+detect_extensions = ["py"]
+detect_folders = ["venv", ".venv"]
+disabled = false
 
 [docker_context]
 symbol = ""
