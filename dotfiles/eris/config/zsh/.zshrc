@@ -19,7 +19,8 @@ source "/Users/eris/.zsh-z.plugin.zsh"
 
 source <(fzf --zsh)
 
-PATH="/Users/eris/.composer/vendor/bin/:/Users/eris/.cargo/bin:${DOTFILES}/scripts/bash:${DOTFILES}/scripts/macos:/Users/eris/.bin:$PATH"
+PATH="/Users/eris/Developer/depot_tools:/Users/eris/Library/Application Support/Herd/bin:$PATH"
+PATH="/Users/eris/.composer/vendor/bin/:/Users/eris/.cargo/bin:${DOTFILES}/scripts/bash:${DOTFILES}/scripts/macos:/Users/eris/.bin:/Users/eris/.local/bin:/usr/local/sbin:/usr/local/bin:$PATH"
 
 # PATH="/Users/eris/.cargo/bin:$PATH:/usr/local/lib/python3.12/site-packages:${PATH}"
 
