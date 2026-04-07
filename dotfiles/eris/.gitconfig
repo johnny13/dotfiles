@@ -1,6 +1,6 @@
 [user]
-	email = 598517+johnny13@users.noreply.github.com
-	name = Derek
+	email = admin@huement.com
+	name = Derek Scott
 [credential]
 	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
@@ -13,3 +13,13 @@
 	clean = git-lfs clean -- %f
 [init]
 	templatedir = /Users/eris/.git-templates
+[http]
+	postBuffer = 524288000
+[safe]
+	directory = *
+	directory = /var/www/html
+	directory = /var/www/html
+	directory = /var/www/html
+	directory = /var/www/html
+	directory = /var/www/html
+	directory = *

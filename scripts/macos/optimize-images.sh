@@ -77,25 +77,6 @@ check_tools() {
     fi
 }
 
-# Function to calculate aspect ratio and resize
-resize_image() {
-    local src=$1
-    local dest=$2
-    local size=$3
-    local quality=$4
-    local width=$(identify -format "%w" "$src")
-    local height=$(identify -format "%h" "$src")
-    local ratio=$(echo "scale=2; $width / $height" | bc)
-
-    if [ "$size" -eq 200 ]; then
-        local new_height=$(echo "scale=0; $size / $ratio" | bc)
-        magick "$src" -resize "${size}x${new_height}^" -gravity center -extent "${size}x${new_height}" -quality "$quality" "$dest"
-    elif [ "$size" -eq 500 ]; then
-        local new_height=$(echo "scale=0; $size / $ratio" | bc)
-        magick "$src" -resize "${size}x${new_height}^" -gravity center -extent "${size}x${new_height}" -quality "$quality" "$dest"
-    fi
-}
-
 # Set directory (first argument or script's directory)
 DIR="${1:-$(dirname "$0")}"
 if [[ ! -d "$DIR" ]]; then
@@ -174,7 +155,8 @@ find "$DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | 
             else
                 echo "${YELLOW}500x500 thumbnail already exists: $thumb_500${RESET}"
             fi
-            
+
+             ((COUNTER++))
             ;;
         "png")
             # Optimize PNG using optipng
@@ -184,6 +166,22 @@ find "$DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | 
             else
                 print_msg "error" "Failed to optimize '$BASENAME'"
             fi
+
+            # Create 500x500 thumbnail
+            thumb_500="${THUMBS_DIR}/${BASENAME%.*}-500.jpg"
+            if [ ! -f "$thumb_500" ]; then
+                echo "${GREEN}-[ 500 ]-${RESET}"
+                magick "$FILE" -resize 500x500^ -gravity center -extent 500x500 -quality 80 "$thumb_500"
+                if [[ $? -eq 0 ]]; then
+                    echo "${BLUE}Created 500x500 thumbnail: $thumb_500${RESET}"
+                else
+                    echo "${RED}Failed to create thumbnail: $thumb_500${RESET}"
+                fi
+            else
+                echo "${YELLOW}500x500 thumbnail already exists: $thumb_500${RESET}"
+            fi
+
+
             ((COUNTER++))
             ;;
         *)
