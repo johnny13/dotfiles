@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# ==============================================================================
+# BORDERS CONFIGURATION FILE
+# Location: ~/.config/borders/bordersrc
+# ==============================================================================
+
+options=(
+    style=uniform               # Window corner style: round, square, or uniform
+    width=3.0                 # Border width in points
+    hidpi=on                  # Sharp rendering on Retina displays
+	    
+    # Colors use 0xAARRGGBB format (Alpha, Red, Green, Blue)
+	active_color="0xff7dcfff 0xffbb9af7"
+    # active_color=0xffe1e3e4   # Focused window border color (e.g., bright silver/white)
+    inactive_color=0xff363b54 # Unfocused window border color (e.g., subtle dark gray)
+    
+    # Optional: Match disabled Finder from yabai so it doesn't get a border
+    blacklist="Finder"
+)
+
+borders "${options[@]}"

@@ -1,1 +1,3 @@
-# source "/Users/eris/.local/share/dorothy/init.sh" # Dorothy
+# Here for Legacy Purposes, ZSH is active Shells
+
+

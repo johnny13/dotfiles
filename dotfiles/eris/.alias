@@ -3,6 +3,7 @@ alias la='ls -la'
 alias lx='exa -labhm --no-permissions --git --modified --color-scale --icons --group-directories-first'
 alias lsown='exa -lbhma --icons --color-scale --group-directories-first --sort=modified'
 alias lsmodtree='exa --sort=modified -T -L 2 --group-directories-first'
+alias lsmod='exa --sort=modified -l'
 alias lb='/bin/ls --color=auto -alF'
 alias ll='lsd -1lhF --size short --group-directories-first --blocks user,git,size,date,name --header'
 alias ldis='exa -lh --no-user --no-time --no-permissions --sort=type'
@@ -49,3 +50,8 @@ alias sqmigrate="./vendor/bin/sail artisan migrate --database=forge --path=datab
 newSQL() {
     ./vendor/bin/sail artisan make:migration "$1" --table=sources --path=database/migrations/forge
 }
+
+alias webp2png="/Users/eris/Dotfiles/scripts/macos/webp2png.sh"
+alias png2webp="/Users/eris/Dotfiles/scripts/macos/png2webp.sh"
+
+alias miniols="/usr/local/bin/mc ls huement/hblog"

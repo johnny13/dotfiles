@@ -1,0 +1,162 @@
+{
+  "profiles": [
+    {
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Right Control + Page Down to Open/Focus Terminal",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "page_down",
+                  "modifiers": {
+                    "mandatory": ["right_control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [{ "shell_command": "open -b com.googlecode.iterm2" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Right Control + Escape to Page Up",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "escape",
+                  "modifiers": {
+                    "mandatory": ["right_control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "page_up",
+                    "modifiers": []
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Yabai: Focus Window (Option + HJKL)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": { "key_code": "h", "modifiers": { "mandatory": ["left_option"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --focus west" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "j", "modifiers": { "mandatory": ["left_option"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --focus south" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "k", "modifiers": { "mandatory": ["left_option"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --focus north" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "l", "modifiers": { "mandatory": ["left_option"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --focus east" }]
+              }
+            ]
+          },
+          {
+            "description": "Yabai: Swap Window Position (Option + Shift + HJKL)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": { "key_code": "h", "modifiers": { "mandatory": ["left_option", "left_shift"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --swap west" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "j", "modifiers": { "mandatory": ["left_option", "left_shift"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --swap south" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "k", "modifiers": { "mandatory": ["left_option", "left_shift"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --swap north" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "l", "modifiers": { "mandatory": ["left_option", "left_shift"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --swap east" }]
+              }
+            ]
+          },
+          {
+            "description": "Yabai: Window Controls & Reload",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": { "key_code": "spacebar", "modifiers": { "mandatory": ["left_option"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --toggle float" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "f", "modifiers": { "mandatory": ["left_option"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai -m window --toggle zoom-fullscreen" }]
+              },
+              {
+                "type": "basic",
+                "from": { "key_code": "r", "modifiers": { "mandatory": ["left_option", "left_shift"] } },
+                "to": [{ "shell_command": "/usr/local/bin/yabai --restart-service" }]
+              }
+            ]
+          }
+        ]
+      },
+      "devices": [
+        {
+          "identifiers": {
+            "is_keyboard": true,
+            "product_id": 597,
+            "vendor_id": 1452
+          },
+          "simple_modifications": [
+            {
+              "from": { "consumer_key_code": "eject" },
+              "to": [{ "key_code": "f13" }]
+            },
+            {
+              "from": { "key_code": "f5" },
+              "to": [{ "consumer_key_code": "al_calculator" }]
+            },
+            {
+              "from": { "key_code": "f6" },
+              "to": [{ "apple_vendor_keyboard_key_code": "spotlight" }]
+            }
+          ]
+        }
+      ],
+      "fn_function_keys": [
+        {
+          "from": { "key_code": "f4" },
+          "to": [{ "apple_vendor_keyboard_key_code": "launchpad" }]
+        },
+        {
+          "from": { "key_code": "f5" },
+          "to": [{ "key_code": "f5" }]
+        }
+      ],
+      "name": "Default profile",
+      "selected": true,
+      "simple_modifications": [
+        {
+          "from": { "key_code": "caps_lock" },
+          "to": [{ "key_code": "delete_forward" }]
+        }
+      ],
+      "virtual_hid_keyboard": {
+        "country_code": 0,
+        "keyboard_type_v2": "ansi"
+      }
+    }
+  ]
+}
